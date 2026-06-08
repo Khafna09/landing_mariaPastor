@@ -1,0 +1,91 @@
+---
+import { Image } from "astro:assets";
+import heroBg from "../assets/img/hero.png";
+import logo from "../assets/img/logo.png";
+import rappiLogo from "../assets/img/brand/rappi.png";
+---
+
+<div
+    id="inicio"
+    class="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-slate-950 font-sans pt-24"
+>
+    <div class="absolute inset-0 z-0">
+        <Image
+            src={heroBg}
+            alt="Fondo Marino María Pastor"
+            class="w-full h-full object-cover object-center"
+            quality="high"
+            format="webp"
+            loading="eager"
+            fetchpriority="high"
+        />
+    </div>
+
+    <div class="absolute inset-0 bg-black/50 backdrop-brightness-[0.85] z-10">
+    </div>
+
+    <div
+        class="relative z-20 flex flex-col items-center justify-center px-4 text-center max-w-2xl mx-auto my-auto"
+    >
+        <div class="relative mb-8">
+            <div
+                class="absolute -inset-2 rounded-full border border-[#27b29d]/30 pointer-events-none"
+            >
+            </div>
+
+            <div
+                class="relative w-52 h-52 md:w-60 md:h-60 rounded-full bg-[#0b171c]/95 border border-[#27b29d]/40 flex items-center justify-center p-0 overflow-hidden shadow-2xl transition-transform duration-700 hover:scale-[1.02] mx-auto"
+            >
+                <Image
+                    src={logo}
+                    alt="Logo María Pastor"
+                    class="w-300 object-cover rounded-full"
+                    quality="high"
+                    format="webp"
+                    loading="eager"
+                />
+            </div>
+        </div>
+
+        <h2
+            class="text-lg md:text-xl font-light tracking-[0.25em] text-white/95 uppercase mb-8 font-mono"
+        >
+            El auténtico sabor <span
+                class="text-[#27b29d] font-normal font-serif lowercase italic"
+                >del mar</span
+            >
+        </h2>
+
+        <div
+            class="flex flex-col sm:flex-row items-center gap-4 w-full justify-center"
+        >
+            <a
+                href="/carta"
+                class="w-full sm:w-auto px-10 py-3.5 rounded-full text-xs font-bold uppercase tracking-widest text-white bg-[#d31a20] hover:bg-[#d31a20]/90 transition-all duration-300 shadow-lg shadow-[#d31a20]/20 hover:-translate-y-0.5 font-mono"
+            >
+                Pide para recoger
+            </a>
+
+            <a
+                href="https://www.rappi.com.pe/restaurantes/11572-maria-pastor-cevicheria"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-full sm:w-auto px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-widest text-white bg-[#133c55] hover:bg-[#1a4d6c] transition-all duration-300 shadow-lg shadow-[#133c55]/20 hover:-translate-y-0.5 flex items-center justify-center gap-2 font-mono"
+            >
+                <Image
+                    src={rappiLogo}
+                    alt="Rappi"
+                    class="h-4 w-auto object-contain"
+                    format="webp"
+                    loading="eager"
+                />
+                Pide delivery
+            </a>
+        </div>
+    </div>
+
+    <div
+        class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#0d131a] to-transparent pointer-events-none z-10"
+    >
+    </div>
+</div>

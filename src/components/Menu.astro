@@ -1,0 +1,176 @@
+---
+import { Image } from "astro:assets";
+import mesaMarinaImg from "../assets/img/mesa_marina.png";
+import pezIlustracion from "../assets/img/decoraciones/pez-vintage.png";
+---
+
+<section
+    id="menu-preview"
+    class="relative py-28 md:py-36 bg-[#fcfaf7] overflow-hidden flex items-center justify-end"
+>
+    <!-- Background Vintage Marine Illustrations -->
+    <div
+        class="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none"
+    >
+        <div
+            class="absolute -bottom-20 -right-20 w-80 md:w-[450px] opacity-10 mix-blend-multiply scale-x-[1]"
+        >
+            <Image
+                src={pezIlustracion}
+                alt="Decoración marina derecha"
+                class="w-full h-auto object-contain"
+                format="webp"
+                loading="lazy"
+            />
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="max-w-7xl mx-auto w-full px-6 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <!-- Right Side: Narrative Content with sliding animation from right (opposite to Historia) -->
+            <div
+                id="menu-texto"
+                class="lg:col-start-7 lg:col-span-6 flex flex-col justify-center text-left opacity-0 translate-x-16 transition-all duration-1000 ease-out"
+            >
+                <!-- Accent subtitle in Turquesa (#27b29d) -->
+                <span
+                    class="text-xs font-bold uppercase tracking-[0.3em] text-[#27b29d] mb-3 inline-block font-mono"
+                >
+                    Experiencia Gastronómica
+                </span>
+
+                <!-- Title -->
+                <h2
+                    class="text-3xl md:text-4xl lg:text-5xl font-bold font-serif tracking-tight text-[#0b171c] mb-6 leading-tight"
+                >
+                    Nuestra Cocina
+                </h2>
+
+                <!-- Text Dedicatoria -->
+                <p
+                    class="text-base md:text-lg text-[#0d131a]/80 font-light leading-relaxed mb-8 max-w-xl"
+                >
+                    Cada plato en <strong class="text-[#0b171c] font-semibold"
+                        >María Pastor</strong
+                    > rinde homenaje al mar y a las recetas tradicionales que trajimos
+                    del norte en 1985. Seleccionamos el mejor pescado fresco del día
+                    y los ingredientes norteños más puros para asegurar que la frescura
+                    y la tradición se encuentren en cada bocado de tu mesa.
+                </p>
+
+                <!-- Featured Menu Mini-Preview (Clean list) -->
+                <div
+                    class="space-y-5 mb-10 border-t border-black/5 pt-6 max-w-xl"
+                >
+                    <div
+                        class="flex justify-between items-center pb-3 border-b border-black/5"
+                    >
+                        <span
+                            class="font-serif font-bold text-base md:text-lg text-[#0b171c]"
+                            >Trilogía de Leches</span
+                        >
+                        <span
+                            class="font-mono text-sm font-semibold text-[#d31a20]"
+                            >S/ 32.40</span
+                        >
+                    </div>
+                    <div
+                        class="flex justify-between items-center pb-3 border-b border-black/5"
+                    >
+                        <span
+                            class="font-serif font-bold text-base md:text-lg text-[#0b171c]"
+                            >Ceviche de Pescado</span
+                        >
+                        <span
+                            class="font-mono text-sm font-semibold text-[#d31a20]"
+                            >S/ 46.17</span
+                        >
+                    </div>
+                    <div
+                        class="flex justify-between items-center pb-3 border-b border-black/5"
+                    >
+                        <span
+                            class="font-serif font-bold text-base md:text-lg text-[#0b171c]"
+                            >Trio María Pastor</span
+                        >
+                        <span
+                            class="font-mono text-sm font-semibold text-[#d31a20]"
+                            >S/ 66.83</span
+                        >
+                    </div>
+                </div>
+
+                <!-- Redirect Button to /carta -->
+                <div>
+                    <a
+                        href="/carta"
+                        class="inline-block px-10 py-3.5 rounded-full text-xs font-bold uppercase tracking-widest text-white bg-[#d31a20] hover:bg-[#d31a20]/90 transition-all duration-300 shadow-lg shadow-[#d31a20]/20 hover:-translate-y-0.5 font-mono"
+                    >
+                        Ver Carta Completa
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Left Side: Full Bleed Rectangular Image aligned to the LEFT edge of the screen (opposite to Historia) -->
+    <div
+        id="menu-imagen"
+        class="w-full px-6 lg:px-0 lg:absolute lg:left-0 lg:top-0 lg:w-[38vw] lg:h-full h-[350px] sm:h-[450px] relative overflow-hidden opacity-0 -translate-x-16 scale-95 transition-all duration-1000 ease-out"
+    >
+        <!-- Overlay for integration with cream background on the right edge of the image -->
+        <div
+            class="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-transparent to-[#fcfaf7] w-full lg:w-48 lg:left-auto lg:right-0 h-full z-10 pointer-events-none"
+        >
+        </div>
+        <div class="absolute inset-0 bg-black/5 z-0 pointer-events-none"></div>
+
+        <Image
+            src={mesaMarinaImg}
+            alt="Mesa Marina María Pastor"
+            class="w-full h-full object-cover"
+            quality="high"
+            format="webp"
+            loading="lazy"
+        />
+    </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const observerOptions = {
+            root: null,
+            threshold: 0.15,
+            rootMargin: "0px",
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const texto = entry.target.querySelector("#menu-texto");
+                    const imagen = entry.target.querySelector("#menu-imagen");
+
+                    if (texto) {
+                        texto.classList.remove("opacity-0", "translate-x-16");
+                    }
+                    if (imagen) {
+                        imagen.classList.remove(
+                            "opacity-0",
+                            "-translate-x-16",
+                            "scale-95",
+                        );
+                    }
+
+                    // Unobserve after showing the animation
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        const target = document.querySelector("#menu-preview");
+        if (target) {
+            observer.observe(target);
+        }
+    });
+</script>

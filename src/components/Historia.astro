@@ -1,0 +1,138 @@
+---
+import { Image } from "astro:assets";
+import historiaImg from "../assets/img/ceviche_historia.png";
+---
+
+<section
+    id="nosotros"
+    class="relative py-28 md:py-36 bg-[#0a1118] overflow-hidden flex items-center justify-start"
+>
+    <!-- Decorative subtle glows matching brand colors -->
+    <div
+        class="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-[#27b29d]/5 blur-3xl pointer-events-none"
+    >
+    </div>
+    <div
+        class="absolute -bottom-40 -right-40 w-96 h-96 rounded-full bg-[#ff942a]/5 blur-3xl pointer-events-none"
+    >
+    </div>
+
+    <!-- Main Container -->
+    <div class="max-w-7xl mx-auto w-full px-6 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <!-- Left Side: Narrative Content with sliding animation from left -->
+            <div
+                id="historia-texto"
+                class="lg:col-span-6 flex flex-col justify-center text-left opacity-0 -translate-x-16 transition-all duration-1000 ease-out"
+            >
+                <!-- Accent subtitle in Turquesa (#27b29d) -->
+                <span
+                    class="text-xs font-bold uppercase tracking-[0.3em] text-[#27b29d] mb-3 inline-block font-mono"
+                >
+                    Nuestra Historia
+                </span>
+
+                <!-- Main Title -->
+                <h2
+                    class="text-3xl md:text-4xl lg:text-5xl font-bold font-serif tracking-tight text-white mb-6 leading-tight"
+                >
+                    Más de 30 años de <br class="hidden sm:inline" />
+                    <span class="text-[#ff942a] font-light italic font-serif"
+                        >tradición y sabor</span
+                    > norteño
+                </h2>
+
+                <!-- Text Paragraphs -->
+                <div
+                    class="space-y-6 text-white/80 font-light text-base md:text-lg leading-relaxed max-w-xl"
+                >
+                    <p>
+                        Han pasado más de 30 años y <strong
+                            class="text-white font-semibold"
+                            >María Pastor</strong
+                        > se ha convertido en un popular restaurante - cebichería
+                        familiar en pleno corazón de Lima, en el distrito de Jesús
+                        María.
+                    </p>
+                    <p>
+                        Todo empezó en <strong
+                            class="text-[#27b29d] font-semibold">1985</strong
+                        > cuando la señora María Pastor, junto con su familia, decidió
+                        dejar su norte querido y emigrar a la capital para hacer realidad
+                        su sueño: llevar el sabor de la comida marina de casa a la
+                        mesa del público más exigente.
+                    </p>
+                </div>
+
+                <!-- Decorative Quote / Slogan (Color: #d31a20) -->
+                <div
+                    class="mt-8 pl-6 border-l-2 border-[#d31a20] italic text-white/85 font-light text-base md:text-lg leading-relaxed font-serif tracking-wide"
+                >
+                    "Del norte trajimos el limón, el ají y el cariño para
+                    preparar el ceviche como se hace en casa."
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Side: Full Bleed Rectangular Image aligned to the edge of the screen with zoom & slide-in from right -->
+    <div
+        id="historia-imagen"
+        class="w-full px-6 lg:px-0 lg:absolute lg:right-0 lg:top-0 lg:w-[38vw] lg:h-full h-[350px] sm:h-[450px] relative overflow-hidden opacity-0 translate-x-16 scale-95 transition-all duration-1000 ease-out"
+    >
+        <!-- Overlay for integration -->
+        <div
+            class="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-[#0a1118] via-transparent to-transparent z-10 pointer-events-none"
+        >
+        </div>
+        <div class="absolute inset-0 bg-black/15 z-0 pointer-events-none"></div>
+
+        <Image
+            src={historiaImg}
+            alt="Ceviche Clásico María Pastor"
+            class="w-full h-full object-cover"
+            quality="high"
+            format="webp"
+            loading="lazy"
+        />
+    </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const observerOptions = {
+            root: null,
+            threshold: 0.15,
+            rootMargin: "0px",
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const texto = entry.target.querySelector("#historia-texto");
+                    const imagen =
+                        entry.target.querySelector("#historia-imagen");
+
+                    if (texto) {
+                        texto.classList.remove("opacity-0", "-translate-x-16");
+                    }
+                    if (imagen) {
+                        imagen.classList.remove(
+                            "opacity-0",
+                            "translate-x-16",
+                            "scale-95",
+                        );
+                    }
+
+                    // Unobserve after showing the animation
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        const target = document.querySelector("#nosotros");
+        if (target) {
+            observer.observe(target);
+        }
+    });
+</script>

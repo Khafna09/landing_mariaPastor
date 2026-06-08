@@ -1,0 +1,408 @@
+---
+import { Image } from "astro:assets";
+import pezVintage from "../assets/img/decoraciones/pez-vintage.png";
+---
+
+<section
+    id="ubicanos"
+    class="relative py-28 md:py-36 bg-[#0d131a] overflow-hidden flex items-center justify-start border-t border-white/5"
+>
+    <div
+        class="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none"
+    >
+        <div
+            class="absolute -bottom-24 -left-24 w-80 md:w-[450px] opacity-[0.03] mix-blend-screen scale-x-[-1] rotate-[15deg]"
+        >
+            <Image
+                src={pezVintage}
+                alt="Decoración marina fondo"
+                class="w-full h-auto object-contain"
+                format="webp"
+                loading="lazy"
+            />
+        </div>
+    </div>
+
+    <div
+        class="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-[#27b29d]/5 blur-3xl pointer-events-none"
+    >
+    </div>
+    <div
+        class="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-[#27b29d]/5 blur-3xl pointer-events-none"
+    >
+    </div>
+
+    <div class="max-w-7xl mx-auto w-full px-6 relative z-10">
+        <div
+            id="ubicanos-header"
+            class="text-center mb-16 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
+        >
+            <span
+                class="text-xs font-bold uppercase tracking-[0.3em] text-[#27b29d] mb-3 inline-block font-mono"
+            >
+                Visítanos
+            </span>
+            <h2
+                class="text-3xl md:text-4xl lg:text-5xl font-bold font-serif text-white tracking-tight"
+            >
+                Nuestros Locales
+            </h2>
+            <div
+                class="w-24 h-[1px] bg-gradient-to-r from-transparent via-[#27b29d] to-transparent mx-auto mt-4"
+            >
+            </div>
+        </div>
+
+        <div
+            id="ubicanos-content"
+            class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch"
+        >
+            <div class="lg:col-span-5 flex flex-col gap-6 justify-between">
+                <div class="space-y-4">
+                    <button
+                        class="location-card w-full text-left p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-[#27b29d]/30 transition-all duration-300 cursor-pointer group relative overflow-hidden focus:outline-none"
+                        data-index="0"
+                    >
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-[#27b29d]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        >
+                        </div>
+                        <div class="relative z-10">
+                            <span
+                                class="text-[10px] font-bold uppercase tracking-[0.2em] text-[#27b29d] mb-2 block font-mono"
+                            >
+                                Sede Principal
+                            </span>
+                            <h3
+                                class="text-xl font-bold font-serif text-white mb-2 group-hover:text-[#27b29d] transition-colors duration-300"
+                            >
+                                Jesús María
+                            </h3>
+                            <p
+                                class="text-sm text-white/70 font-light leading-relaxed mb-4"
+                            >
+                                Av. Cuba 1200, Jesús María, Lima 15072
+                            </p>
+                            <div
+                                class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 text-xs text-white/50 font-light"
+                            >
+                                <span class="flex items-center gap-2 font-mono">
+                                    <svg
+                                        class="w-4 h-4 text-[#27b29d] shrink-0"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                        ></path>
+                                    </svg>
+                                    Lun - Sab: 10:00 AM - 6:00 PM
+                                </span>
+                            </div>
+                        </div>
+                    </button>
+
+                    <button
+                        class="location-card w-full text-left p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-[#27b29d]/30 transition-all duration-300 cursor-pointer group relative overflow-hidden focus:outline-none"
+                        data-index="1"
+                    >
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-[#27b29d]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        >
+                        </div>
+                        <div class="relative z-10">
+                            <span
+                                class="text-[10px] font-bold uppercase tracking-[0.2em] text-[#27b29d] mb-2 block font-mono"
+                            >
+                                Sede San Isidro
+                            </span>
+                            <h3
+                                class="text-xl font-bold font-serif text-white mb-2 group-hover:text-[#27b29d] transition-colors duration-300"
+                            >
+                                San Isidro
+                            </h3>
+                            <p
+                                class="text-sm text-white/70 font-light leading-relaxed mb-4"
+                            >
+                                C. Chinchón 963, San Isidro 15046
+                            </p>
+                            <div
+                                class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 text-xs text-white/50 font-light"
+                            >
+                                <span class="flex items-center gap-2 font-mono">
+                                    <svg
+                                        class="w-4 h-4 text-[#27b29d] shrink-0"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                        ></path>
+                                    </svg>
+                                    Lun - Dom: 11:00 AM - 6:00 PM
+                                </span>
+                            </div>
+                        </div>
+                    </button>
+
+                    <button
+                        class="location-card w-full text-left p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-[#27b29d]/30 transition-all duration-300 cursor-pointer group relative overflow-hidden focus:outline-none"
+                        data-index="2"
+                    >
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-[#27b29d]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        >
+                        </div>
+                        <div class="relative z-10">
+                            <span
+                                class="text-[10px] font-bold uppercase tracking-[0.2em] text-[#27b29d] mb-2 block font-mono"
+                            >
+                                Sede Surquillo
+                            </span>
+                            <h3
+                                class="text-xl font-bold font-serif text-white mb-2 group-hover:text-[#27b29d] transition-colors duration-300"
+                            >
+                                Surquillo
+                            </h3>
+                            <p
+                                class="text-sm text-white/70 font-light leading-relaxed mb-4"
+                            >
+                                Av. Aviación 3898, Surquillo LIMA 34
+                            </p>
+                            <div
+                                class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 text-xs text-white/50 font-light"
+                            >
+                                <span class="flex items-center gap-2 font-mono">
+                                    <svg
+                                        class="w-4 h-4 text-[#27b29d] shrink-0"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                        ></path>
+                                    </svg>
+                                    Lun - Dom: 11:00 AM - 6:00 PM
+                                </span>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="lg:col-span-7 flex flex-col gap-4">
+                <div
+                    id="map-container"
+                    class="relative w-full h-[350px] sm:h-[450px] md:h-[500px] rounded-3xl overflow-hidden border transition-all duration-500 ease-out bg-slate-900"
+                >
+                    <iframe
+                        id="map-iframe"
+                        src=""
+                        class="w-full h-full border-0 grayscale-[15%] contrast-[105%] hover:grayscale-0 transition-all duration-700 opacity-0 scale-95"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Mapa de Ubicación"></iframe>
+                </div>
+
+                <div
+                    class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 px-2 text-xs text-white/50"
+                >
+                    <span
+                        >* Explora la zona interactuando directamente con el
+                        mapa</span
+                    >
+                    <div class="flex gap-4 shrink-0 font-medium">
+                        <a
+                            id="btn-google-maps"
+                            href="https://maps.google.com/?q=Av.+Cuba+1200,+Jesús+María,+Lima"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="hover:text-[#27b29d] transition-colors flex items-center gap-1.5"
+                        >
+                            Ver en Google Maps
+                            <svg
+                                class="w-3.5 h-3.5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                ></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const cards = document.querySelectorAll(".location-card");
+        const mapContainer = document.getElementById("map-container");
+        const iframe = document.getElementById(
+            "map-iframe",
+        ) as HTMLIFrameElement;
+        const btnGoogleMaps = document.getElementById(
+            "btn-google-maps",
+        ) as HTMLAnchorElement;
+        const btnWaze = document.getElementById(
+            "btn-waze",
+        ) as HTMLAnchorElement;
+
+        // Navigation metadata per location (maps)
+        const locationLinks = [
+            {
+                embed: "https://maps.google.com/maps?q=Av.%20Cuba%201200,%20Jes%C3%BAs%20Mar%C3%ADa,%20Lima&t=&z=16&ie=UTF8&iwloc=&output=embed",
+                gmaps: "https://maps.google.com/?q=Av.+Cuba+1200,+Jesús+María,+Lima",
+                waze: "https://waze.com/ul?ll=-12.074447,-77.043598&navigate=yes",
+                themeColor: "#27b29d",
+                shadowColor: "rgba(39, 178, 157, 0.12)",
+            },
+            {
+                embed: "https://maps.google.com/maps?q=Calle%20Chinch%C3%B3n%20963,%20San%20Isidro&t=&z=16&ie=UTF8&iwloc=&output=embed",
+                gmaps: "https://maps.google.com/?q=Calle+Chinchón+963,+San+Isidro,+Lima",
+                waze: "https://waze.com/ul?ll=-12.096335,-77.026788&navigate=yes",
+                themeColor: "#27b29d",
+                shadowColor: "rgba(39, 178, 157, 0.12)",
+            },
+            {
+                embed: "https://maps.google.com/maps?q=Av.%20Aviaci%C3%B3n%203898,%20Surquillo,%20Lima&t=&z=16&ie=UTF8&iwloc=&output=embed",
+                gmaps: "https://maps.google.com/?q=Av.+Aviación+3898,+Surquillo,+Lima",
+                waze: "https://waze.com/ul?ll=-12.112108,-77.001925&navigate=yes",
+                themeColor: "#27b29d",
+                shadowColor: "rgba(39, 178, 157, 0.12)",
+            },
+        ];
+
+        let mapInitialized = false;
+        let currentActiveIndex = 0;
+
+        const initMapIfNeeded = () => {
+            if (!mapInitialized && iframe) {
+                iframe.src = locationLinks[currentActiveIndex].embed;
+                iframe.onload = () => {
+                    iframe.classList.remove("opacity-0", "scale-95");
+                    iframe.classList.add("opacity-100", "scale-100");
+                };
+                mapInitialized = true;
+            }
+        };
+
+        const switchLocation = (idx: number) => {
+            currentActiveIndex = idx;
+            const currentMeta = locationLinks[idx];
+
+            cards.forEach((card) => {
+                card.classList.remove(
+                    "active-card",
+                    "border-[#27b29d]/40",
+                    "bg-[#27b29d]/[0.03]",
+                );
+                card.classList.add("border-white/5");
+            });
+
+            const activeCard = cards[idx];
+            activeCard.classList.remove("border-white/5");
+            activeCard.classList.add(
+                "active-card",
+                "border-[#27b29d]/40",
+                "bg-[#27b29d]/[0.03]",
+            );
+
+            if (iframe) {
+                if (!mapInitialized) {
+                    // Si el mapa aún no entra en pantalla, guardamos la selección y se inicializará al hacer scroll
+                } else if (iframe.src !== currentMeta.embed) {
+                    iframe.classList.remove("opacity-100", "scale-100");
+                    iframe.classList.add("opacity-0", "scale-95");
+
+                    setTimeout(() => {
+                        iframe.src = currentMeta.embed;
+                    }, 200);
+                }
+            }
+
+            if (btnGoogleMaps) btnGoogleMaps.href = currentMeta.gmaps;
+            if (btnWaze) btnWaze.href = currentMeta.waze;
+
+            if (mapContainer) {
+                mapContainer.style.borderColor = `${currentMeta.themeColor}33`; // 20% opacity hex
+                mapContainer.style.boxShadow = `0 25px 50px -12px ${currentMeta.shadowColor}`;
+            }
+        };
+
+        cards.forEach((card, idx) => {
+            card.addEventListener("click", () => switchLocation(idx));
+        });
+
+        if (iframe) {
+            iframe.addEventListener("load", () => {
+                iframe.classList.remove("opacity-0", "scale-95");
+                iframe.classList.add("opacity-100", "scale-100");
+            });
+        }
+
+        switchLocation(0);
+
+        const observerOptions = {
+            root: null,
+            threshold: 0.1,
+            rootMargin: "100px",
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    initMapIfNeeded();
+
+                    const header =
+                        entry.target.querySelector("#ubicanos-header");
+                    if (header) {
+                        header.classList.remove("opacity-0", "translate-y-8");
+                    }
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        const section = document.querySelector("#ubicanos");
+        if (section) {
+            observer.observe(section);
+        }
+    });
+</script>
+
+<style>
+    .location-card {
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    .location-card:not(.active-card):hover {
+        background-color: rgba(255, 255, 255, 0.015);
+        transform: translateY(-2px);
+    }
+    .location-card:not(.active-card) {
+        opacity: 0.7;
+    }
+    .location-card.active-card {
+        opacity: 1;
+    }
+</style>

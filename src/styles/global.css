@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Outfit", sans-serif;
+  --font-serif: "Playfair Display", serif;
+  --font-mono: "Montserrat", sans-serif;
+}
+
+/* Brand palette and custom utilities */
+:root {
+  --color-primary: #27b29d; /* Turquoise */
+  --color-accent: #d31a20;  /* Crimson */
+  --color-dark: #133c55;   /* Deep Marine */
+  --color-gold: #d4af37;   /* Premium Gold */
+  --color-bg: #f5f9fb;    /* Light cyan */
+  --color-card-bg: rgba(255,255,255,0.45);
+  --color-card-border: rgba(19,60,85,0.12);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #0b171c;
+    --color-card-bg: rgba(19,60,85,0.45);
+    --color-card-border: rgba(255,255,255,0.15);
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    @apply bg-[var(--color-card-bg)] backdrop-blur-xl border border-[var(--color-card-border)] rounded-2xl shadow-lg transition-all duration-300;
+  }
+  .btn-primary {
+    @apply bg-gradient-to-r from-[var(--color-primary)] to-[#1f9381] hover:from-[#1f9381] hover:to-[#177a6b] text-white font-bold uppercase tracking-wider py-2 px-5 rounded-full shadow-md hover:shadow-lg transition-all;
+  }
+  .btn-gold {
+    @apply bg-gradient-to-r from-[var(--color-gold)] to-[#b8860b] hover:from-[#b8860b] hover:to-[var(--color-gold)] text-white font-bold uppercase tracking-wider py-2 px-5 rounded-full shadow-md hover:shadow-lg transition-all;
+  }
+  .btn-price {
+    @apply bg-[var(--color-accent)]/10 text-[var(--color-accent)] font-serif font-bold text-lg px-3 py-1 rounded-full;
+  }
+  .svg-control {
+    @apply w-5 h-5 text-[var(--color-dark)] transition-colors duration-200 hover:text-[var(--color-primary)];
+  }
+}
