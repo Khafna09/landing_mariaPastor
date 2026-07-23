@@ -14,20 +14,22 @@ import rappiLogo from "../assets/img/brand/rappi.png";
             src={heroBg}
             alt="Fondo Marino María Pastor"
             class="w-full h-full object-cover object-center"
-            quality="high"
+            quality={60}
             format="webp"
             loading="eager"
             fetchpriority="high"
         />
     </div>
 
-    <div class="absolute inset-0 bg-black/50 backdrop-brightness-[0.85] z-10">
+    <div class="absolute inset-0 bg-black/45 backdrop-brightness-[0.85] z-10">
     </div>
 
     <div
         class="relative z-20 flex flex-col items-center justify-center px-4 text-center max-w-2xl mx-auto my-auto"
     >
-        <div class="relative mb-8">
+        <h1 class="sr-only">María Pastor - Cevichería de Alta Gama</h1>
+
+        <div class="relative mb-8 reveal reveal-scale-up reveal-duration-1000">
             <div
                 class="absolute -inset-2 rounded-full border border-[#27b29d]/30 pointer-events-none"
             >
@@ -48,7 +50,7 @@ import rappiLogo from "../assets/img/brand/rappi.png";
         </div>
 
         <h2
-            class="text-lg md:text-xl font-light tracking-[0.25em] text-white/95 uppercase mb-8 font-mono"
+            class="text-lg md:text-xl font-light tracking-[0.25em] text-white/95 uppercase mb-8 font-mono reveal reveal-up reveal-delay-200 reveal-duration-1000"
         >
             El auténtico sabor <span
                 class="text-[#27b29d] font-normal font-serif lowercase italic"
@@ -57,7 +59,7 @@ import rappiLogo from "../assets/img/brand/rappi.png";
         </h2>
 
         <div
-            class="flex flex-col sm:flex-row items-center gap-4 w-full justify-center"
+            class="flex flex-col sm:flex-row items-center gap-4 w-full justify-center reveal reveal-up reveal-delay-400 reveal-duration-1000"
         >
             <a
                 href="/carta"

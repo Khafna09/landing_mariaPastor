@@ -42,3 +42,52 @@
     @apply w-5 h-5 text-[var(--color-dark)] transition-colors duration-200 hover:text-[var(--color-primary)];
   }
 }
+
+/* --- Scroll Reveal System --- */
+.reveal {
+  opacity: 0;
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+/* Modificadores de Dirección */
+.reveal-up {
+  transform: translateY(30px);
+}
+.reveal-down {
+  transform: translateY(-30px);
+}
+.reveal-left {
+  transform: translateX(-30px);
+}
+.reveal-right {
+  transform: translateX(30px);
+}
+.reveal-scale-up {
+  transform: scale(0.95);
+}
+.reveal-scale-down {
+  transform: scale(1.05);
+}
+.reveal-fade {
+  transform: none; /* Solo opacidad, sin traslación */
+}
+
+/* Retrasos (Delays) */
+.reveal-delay-100 { transition-delay: 100ms; }
+.reveal-delay-200 { transition-delay: 200ms; }
+.reveal-delay-300 { transition-delay: 300ms; }
+.reveal-delay-400 { transition-delay: 400ms; }
+.reveal-delay-500 { transition-delay: 500ms; }
+
+/* Duraciones (Durations) */
+.reveal-duration-500 { transition-duration: 500ms; }
+.reveal-duration-700 { transition-duration: 700ms; }
+.reveal-duration-1000 { transition-duration: 1000ms; }
+.reveal-duration-1200 { transition-duration: 1200ms; }
+
+/* Estado Activo */
+.reveal.is-visible {
+  opacity: 1;
+  transform: translate(0) scale(1);
+}

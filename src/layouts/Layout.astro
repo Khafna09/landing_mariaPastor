@@ -12,7 +12,7 @@ interface Props {
 const {
 	title = "María Pastor - Cevichería de Alta Gama",
 	description = "Disfruta de la mejor experiencia gastronómica marina en María Pastor. Ceviches, piqueos y platos premium en Jesús María, San Isidro y Surquillo.",
-	image = "/favicon.svg", // Placeholder until social image is provided
+	image = "/favicon.svg",
 	url = "https://mariapastor.com.pe",
 } = Astro.props;
 
@@ -97,6 +97,39 @@ const jsonLd = {
 			<slot />
 		</main>
 		<Footer />
+		<script>
+			document.addEventListener("DOMContentLoaded", () => {
+				const revealElements = document.querySelectorAll(".reveal");
+				if (revealElements.length === 0) return;
+
+				const observerOptions = {
+					root: null,
+					threshold: 0.1,
+					rootMargin: "0px 0px -40px 0px",
+				};
+
+				const observer = new IntersectionObserver((entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							entry.target.classList.add("is-visible");
+						} else {
+							const rect = entry.boundingClientRect;
+							if (rect.top > 0) {
+								entry.target.classList.remove("is-visible");
+							}
+						}
+					});
+				}, observerOptions);
+
+				revealElements.forEach((el) => {
+					const rect = el.getBoundingClientRect();
+					if (rect.top < window.innerHeight) {
+						el.classList.add("is-visible");
+					}
+					observer.observe(el);
+				});
+			});
+		</script>
 	</body>
 </html>
 
@@ -105,7 +138,6 @@ const jsonLd = {
 		font-family: "Outfit", sans-serif;
 	}
 
-	/* Custom Premium Scrollbar */
 	::-webkit-scrollbar {
 		width: 10px;
 		height: 10px;
@@ -119,7 +151,7 @@ const jsonLd = {
 			178,
 			157,
 			0.35
-		); /* Elegant semi-transparent turquoise */
+		);
 		border-radius: 9999px;
 		border: 3px solid transparent;
 		background-clip: content-box;
@@ -131,7 +163,6 @@ const jsonLd = {
 		background-clip: content-box;
 	}
 
-	/* Firefox support */
 	* {
 		scrollbar-width: thin;
 		scrollbar-color: rgba(39, 178, 157, 0.35) transparent;

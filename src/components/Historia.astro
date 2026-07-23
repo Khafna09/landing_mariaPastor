@@ -5,9 +5,8 @@ import historiaImg from "../assets/img/ceviche_historia.png";
 
 <section
     id="nosotros"
-    class="relative py-28 md:py-36 bg-[#0a1118] overflow-hidden flex items-center justify-start"
+    class="relative py-28 md:py-36 bg-[#0a1118] overflow-hidden"
 >
-    <!-- Decorative subtle glows matching brand colors -->
     <div
         class="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-[#27b29d]/5 blur-3xl pointer-events-none"
     >
@@ -17,22 +16,18 @@ import historiaImg from "../assets/img/ceviche_historia.png";
     >
     </div>
 
-    <!-- Main Container -->
     <div class="max-w-7xl mx-auto w-full px-6 relative z-10">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <!-- Left Side: Narrative Content with sliding animation from left -->
             <div
                 id="historia-texto"
-                class="lg:col-span-6 flex flex-col justify-center text-left opacity-0 -translate-x-16 transition-all duration-1000 ease-out"
+                class="lg:col-span-6 flex flex-col justify-center text-left reveal reveal-left reveal-duration-1000"
             >
-                <!-- Accent subtitle in Turquesa (#27b29d) -->
                 <span
-                    class="text-xs font-bold uppercase tracking-[0.3em] text-[#27b29d] mb-3 inline-block font-mono"
+                    class="text-xs font-bold uppercase tracking-[0.3em] text-[#27b29d] mb-3 inline-block"
                 >
                     Nuestra Historia
                 </span>
 
-                <!-- Main Title -->
                 <h2
                     class="text-3xl md:text-4xl lg:text-5xl font-bold font-serif tracking-tight text-white mb-6 leading-tight"
                 >
@@ -42,7 +37,6 @@ import historiaImg from "../assets/img/ceviche_historia.png";
                     > norteño
                 </h2>
 
-                <!-- Text Paragraphs -->
                 <div
                     class="space-y-6 text-white/80 font-light text-base md:text-lg leading-relaxed max-w-xl"
                 >
@@ -64,9 +58,8 @@ import historiaImg from "../assets/img/ceviche_historia.png";
                     </p>
                 </div>
 
-                <!-- Decorative Quote / Slogan (Color: #d31a20) -->
                 <div
-                    class="mt-8 pl-6 border-l-2 border-[#d31a20] italic text-white/85 font-light text-base md:text-lg leading-relaxed font-serif tracking-wide"
+                    class="mt-8 pl-6 border-l-2 border-[#d31a20] italic text-white/70 font-serif"
                 >
                     "Del norte trajimos el limón, el ají y el cariño para
                     preparar el ceviche como se hace en casa."
@@ -75,12 +68,10 @@ import historiaImg from "../assets/img/ceviche_historia.png";
         </div>
     </div>
 
-    <!-- Right Side: Full Bleed Rectangular Image aligned to the edge of the screen with zoom & slide-in from right -->
     <div
         id="historia-imagen"
-        class="w-full px-6 lg:px-0 lg:absolute lg:right-0 lg:top-0 lg:w-[38vw] lg:h-full h-[350px] sm:h-[450px] relative overflow-hidden opacity-0 translate-x-16 scale-95 transition-all duration-1000 ease-out"
+        class="w-full mt-12 lg:mt-0 px-6 lg:px-0 lg:absolute lg:right-0 lg:top-0 lg:w-[38vw] lg:h-full h-[350px] sm:h-[450px] relative overflow-hidden reveal reveal-right reveal-scale-up reveal-duration-1000"
     >
-        <!-- Overlay for integration -->
         <div
             class="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-[#0a1118] via-transparent to-transparent z-10 pointer-events-none"
         >
@@ -97,42 +88,3 @@ import historiaImg from "../assets/img/ceviche_historia.png";
         />
     </div>
 </section>
-
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const observerOptions = {
-            root: null,
-            threshold: 0.15,
-            rootMargin: "0px",
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const texto = entry.target.querySelector("#historia-texto");
-                    const imagen =
-                        entry.target.querySelector("#historia-imagen");
-
-                    if (texto) {
-                        texto.classList.remove("opacity-0", "-translate-x-16");
-                    }
-                    if (imagen) {
-                        imagen.classList.remove(
-                            "opacity-0",
-                            "translate-x-16",
-                            "scale-95",
-                        );
-                    }
-
-                    // Unobserve after showing the animation
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        const target = document.querySelector("#nosotros");
-        if (target) {
-            observer.observe(target);
-        }
-    });
-</script>

@@ -2,15 +2,16 @@
   class="fixed top-0 left-0 w-full z-50 bg-[#0d131a]/80 backdrop-blur-md border-b border-white/5 px-6 py-4 transition-all duration-300"
 >
   <div class="max-w-7xl mx-auto flex items-center justify-between">
-    <div class="flex items-center gap-4">
+    <div class="flex-1 flex items-center gap-4">
       <span
-        class="text-sm font-semibold tracking-widest text-[#27b29d] uppercase hidden sm:inline-block"
+        class="text-sm font-semibold tracking-widest text-[#27b29d] uppercase"
         >MARÍA PASTOR</span
       >
     </div>
 
+    <!-- Desktop Navigation -->
     <div
-      class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide"
+      class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide flex-none"
     >
       <a
         href="/#inicio"
@@ -27,7 +28,6 @@
         class="text-white/80 hover:text-[#ff942a] transition-all relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-[#ff942a] hover:after:w-full after:transition-all"
         >Nuestra Carta</a
       >
-
       <a
         href="/#ubicanos"
         class="text-white/80 hover:text-[#ff942a] transition-all relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-[#ff942a] hover:after:w-full after:transition-all"
@@ -35,13 +35,106 @@
       >
     </div>
 
-    <div class="flex items-center gap-4">
-      <a
-        href="#reservar"
-        class="px-5 py-2 text-xs font-semibold uppercase tracking-wider text-white border border-[#27b29d]/50 hover:bg-[#27b29d] hover:text-black rounded-full transition-all duration-300 shadow-md shadow-[#27b29d]/10 hover:shadow-[#27b29d]/30"
+    <div class="flex-1 flex items-center justify-end gap-4">
+      <button
+        id="mobile-menu-btn"
+        class="block md:hidden text-white hover:text-[#27b29d] transition-colors focus:outline-none z-50 cursor-pointer"
+        aria-label="Toggle Menu"
       >
-        Reservas
-      </a>
+        <svg
+          id="menu-icon-hamburger"
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-6 h-6 transition-all duration-300"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+        <svg
+          id="menu-icon-close"
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-6 h-6 hidden transition-all duration-300"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
     </div>
   </div>
+
+  <div
+    id="mobile-menu-drawer"
+    class="fixed inset-0 w-full h-screen bg-[#0d131a]/98 backdrop-blur-lg z-40 flex flex-col items-center justify-center gap-8 text-lg font-medium tracking-widest text-white translate-x-full transition-transform duration-300"
+  >
+    <a
+      href="/#inicio"
+      class="mobile-nav-link text-white/90 hover:text-[#27b29d] transition-colors"
+      >Inicio</a
+    >
+    <a
+      href="/#nosotros"
+      class="mobile-nav-link text-white/90 hover:text-[#27b29d] transition-colors"
+      >Historia</a
+    >
+    <a
+      href="/#menu-preview"
+      class="mobile-nav-link text-white/90 hover:text-[#ff942a] transition-colors"
+      >Nuestra Carta</a
+    >
+    <a
+      href="/#ubicanos"
+      class="mobile-nav-link text-white/90 hover:text-[#ff942a] transition-colors"
+      >Ubícanos</a
+    >
+  </div>
 </nav>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("mobile-menu-btn");
+    const drawer = document.getElementById("mobile-menu-drawer");
+    const hamburgerIcon = document.getElementById("menu-icon-hamburger");
+    const closeIcon = document.getElementById("menu-icon-close");
+    const links = document.querySelectorAll(".mobile-nav-link");
+
+    if (!btn || !drawer) return;
+
+    let isOpen = false;
+
+    const toggleMenu = () => {
+      isOpen = !isOpen;
+      if (isOpen) {
+        drawer.classList.remove("translate-x-full");
+        drawer.classList.add("translate-x-0");
+        hamburgerIcon?.classList.add("hidden");
+        closeIcon?.classList.remove("hidden");
+        document.body.style.overflow = "hidden"; // Disable scroll
+      } else {
+        drawer.classList.remove("translate-x-0");
+        drawer.classList.add("translate-x-full");
+        hamburgerIcon?.classList.remove("hidden");
+        closeIcon?.classList.add("hidden");
+        document.body.style.overflow = "";
+      }
+    };
+
+    btn.addEventListener("click", toggleMenu);
+
+    links.forEach((link) => {
+      link.addEventListener("click", () => {
+        if (isOpen) toggleMenu();
+      });
+    });
+  });
+</script>
