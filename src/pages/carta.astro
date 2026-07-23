@@ -54,6 +54,8 @@ const menuCategories = rawCategories.map((cat) => ({
       }))
     : [],
 }));
+
+const defaultLogoUrl = logo.src;
 ---
 
 ---
@@ -677,7 +679,7 @@ const menuCategories = rawCategories.map((cat) => ({
   </div>
 </Layout>
 
-<script define:vars={{ makeWebhookUrl, googleScriptUrl }} is:inline>
+<script define:vars={{ makeWebhookUrl, googleScriptUrl, defaultLogoUrl }} is:inline>
   document.addEventListener("DOMContentLoaded", () => {
     // Scrollspy Logic
     const sections = document.querySelectorAll("main > section");
@@ -855,7 +857,7 @@ const menuCategories = rawCategories.map((cat) => ({
         div.className =
           "w-full bg-transparent group border-b border-gray-100 last:border-0";
         const isDefaultLogo = !item.image;
-        const itemImage = item.image || "/src/assets/img/logo.png";
+        const itemImage = item.image || defaultLogoUrl;
         const bgClass = isDefaultLogo ? "bg-[#0b171c] p-2" : "bg-gray-100";
         const imgFitClass = isDefaultLogo ? "object-contain" : "object-cover";
 
