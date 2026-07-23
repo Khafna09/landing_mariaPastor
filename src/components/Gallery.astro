@@ -1,0 +1,113 @@
+---
+import { Image } from "astro:assets";
+
+// Import images
+import cevicheMixto from "../assets/img/ceviche_mixto.png";
+import arrozMariscos from "../assets/img/arroz_mariscos.png";
+import causaCangrejo from "../assets/img/causa_cangrejo.png";
+import piscoSour from "../assets/img/pisco_sour.png";
+import cevicheHistoria from "../assets/img/ceviche_historia.png";
+import mesaMarina from "../assets/img/mesa_marina.png";
+import conchaVintage from "../assets/img/decoraciones/concha_vintage.png";
+
+const items = [
+    {
+        src: cevicheMixto,
+        alt: "Ceviche Mixto Especial",
+        title: "Ceviche Mixto",
+        desc: "Selección fresca de lenguado, pulpo y langostinos en leche de tigre al ají limo."
+    },
+    {
+        src: arrozMariscos,
+        alt: "Arroz con Mariscos Premium",
+        title: "Arroz con Mariscos",
+        desc: "Clásico norteño jugoso con mariscos seleccionados, pimientos y notas de culantro."
+    },
+    {
+        src: causaCangrejo,
+        alt: "Causa de Cangrejo Gourmet",
+        title: "Causa de Cangrejo",
+        desc: "Suave masa de papa amarilla y ají amarillo rellena de fresca pulpa de cangrejo."
+    },
+    {
+        src: piscoSour,
+        alt: "Pisco Sour Clásico Peruano",
+        title: "Pisco Sour",
+        desc: "Nuestra bebida bandera preparada con pisco quebranta seleccionado y limón sutil."
+    },
+    {
+        src: cevicheHistoria,
+        alt: "Ceviche Clásico María Pastor",
+        title: "Ceviche Clásico",
+        desc: "La receta original de 1985 con la frescura inconfundible del mar peruano."
+    },
+    {
+        src: mesaMarina,
+        alt: "Mesa Marina Experiencia",
+        title: "Nuestra Mesa",
+        desc: "Una experiencia para compartir con los mejores piqueos marinos norteños."
+    }
+];
+---
+
+<section
+    id="galeria"
+    class="relative py-28 md:py-36 bg-[#0a1118] overflow-hidden flex flex-col items-center justify-center border-t border-white/5"
+>
+    <div class="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-[#27b29d]/5 blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-[#ff942a]/5 blur-3xl pointer-events-none"></div>
+
+    <div class="absolute top-10 left-10 w-24 md:w-36 opacity-[0.03] select-none pointer-events-none mix-blend-screen">
+        <Image
+            src={conchaVintage}
+            alt="Decoración marina"
+            class="w-full h-auto object-contain"
+            format="webp"
+            loading="lazy"
+        />
+    </div>
+
+    <div class="max-w-7xl mx-auto w-full px-6 relative z-10">
+        <div
+            id="galeria-header"
+            class="text-center mb-16 reveal reveal-up reveal-duration-1000"
+        >
+            <span class="text-xs font-bold uppercase tracking-[0.3em] text-[#27b29d] mb-3 inline-block font-mono">
+                Arte y Pasión
+            </span>
+            <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold font-serif text-white tracking-tight">
+                Nuestra Galería
+            </h2>
+            <div class="w-24 h-[1px] bg-gradient-to-r from-transparent via-[#27b29d] to-transparent mx-auto mt-4"></div>
+            <p class="text-sm md:text-base text-white/60 font-light mt-4 max-w-lg mx-auto">
+                Cada plato es una obra de arte creada con la mejor pesca del día e ingredientes seleccionados.
+            </p>
+        </div>
+
+        <div
+            id="galeria-grid"
+            class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 md:gap-8 reveal reveal-up reveal-delay-100 reveal-duration-1000"
+        >
+            {items.map((item) => (
+                <div class="group relative overflow-hidden rounded-none aspect-[4/3] bg-slate-900 border border-white/5 hover:border-[#27b29d]/30 transition-all duration-500 shadow-md hover:shadow-xl hover:shadow-[#27b29d]/5">
+                    <!-- Image -->
+                    <div class="w-full h-full scale-100 group-hover:scale-105 transition-transform duration-700 ease-out">
+                        <Image
+                            src={item.src}
+                            alt={item.alt}
+                            class="w-full h-full object-cover"
+                            quality="medium"
+                            format="webp"
+                            loading="lazy"
+                        />
+                    </div>
+                    
+                    <!-- Overlay (no text) -->
+                    <div class="absolute inset-0 bg-[#0a1118]/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>
+
