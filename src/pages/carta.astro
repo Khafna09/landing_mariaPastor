@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Navbar from "../components/Navbar.astro";
 import { Image } from "astro:assets";
+import { createClient } from "@sanity/client";
 import pezVintage from "../assets/img/decoraciones/pez-vintage.png";
 import caballitoVintage from "../assets/img/decoraciones/caballito_vintage.png";
 import caracolVintage from "../assets/img/decoraciones/caracol_vintage.png";
@@ -12,633 +13,49 @@ import pecesVintage from "../assets/img/decoraciones/peces_vintage.png";
 import mesaMarinaImg from "../assets/img/mesa_marina.png";
 import cevicheHistoriaImg from "../assets/img/ceviche_historia.png";
 import heroBgImg from "../assets/img/hero.png";
+import logo from "../assets/img/logo.png";
 
-// Full menu data array
-const menuCategories = [
-  {
-    id: "entradas-y-piqueos",
-    name: "Entradas y Piqueos Especiales",
-    items: [
-      {
-        name: "Trilogía De Leches",
-        description:
-          "Tres porciones de postre a base de leche, servidas con una salsa dulce. Ideal para los amantes de los sabores cremosos.",
-        price: "S/ 32.40",
-      },
-      {
-        name: "Alitas A Tu Estilo",
-        description:
-          "Alitas de pollo con salsas a elegir: BBQ, Buffalo, Oriental o Acevichado. Incluye rodajas de limón.",
-        price: "S/ 27.00",
-      },
-      {
-        name: "Leche De Tigre",
-        description:
-          "Leche de tigre con opciones de clásico, rocoto o ají amarillo. Incluye cebolla, cilantro y ají amarillo.",
-        price: "S/ 23.40",
-      },
-    ],
-  },
-  {
-    id: "entradas",
-    name: "Entradas",
-    items: [
-      {
-        name: "Causa de Pollo",
-        description:
-          "Causa rellena de pollo, zanahoria, arverja, mayonesa y rodajas de palta.",
-        price: "S/ 24.30",
-      },
-      {
-        name: "Papa a la Huancaina",
-        description:
-          "Papas sancochadas con crema de ají, leche y queso, acompañadas de huevo duro y aceitunas.",
-        price: "S/ 21.87",
-      },
-      {
-        name: "Causa de Langostinos",
-        description:
-          "Causa rellena con langostinos, palta, huevo y decorada con microgreens y tomate cherry.",
-        price: "S/ 41.31",
-      },
-      {
-        name: "Causa de Pulpa de Cangrejo",
-        description:
-          "Causa rellena de pulpa de cangrejo, palta, toquecito perfecto de limón, sal y mayonesa.",
-        price: "S/ 43.74",
-      },
-      {
-        name: "Causa Acevichada",
-        description:
-          "Causa relleno con pulpa de cangrejo, coronada con trozos de pescado y salsa acevichada.",
-        price: "S/ 48.60",
-      },
-      {
-        name: "Leche de Tigre Tradicional",
-        description:
-          "Leche de Tigre con pescado, ají, limón, cebolla, kion y canchita. Acompañado de chifles y calamares fritos.",
-        price: "S/ 24.30",
-      },
-      {
-        name: "Leche de Tigre Imperial",
-        description:
-          "Leche de Tigre Imperial con opciones de clásico, rocoto o ají amarillo. Incluye chifles.",
-        price: "S/ 46.17",
-      },
-      {
-        name: "Causa de Pulpo Al Olivo",
-        description:
-          "Causa de papa con pulpo y crema al olivo, decorada con perejil picado.",
-        price: "S/ 43.74",
-      },
-      {
-        name: "Pulpo Al Olivo",
-        description: "Pulpo con crema al olivo, acompañado de palta y galleta.",
-        price: "S/ 46.17",
-      },
-      {
-        name: "Leche de Tigre Power",
-        description:
-          "Leche de Tigre Power con conchas negras, ideal para energizar. Preparación tradicional con un toque especial.",
-        price: "S/ 31.59",
-      },
-      {
-        name: "Tequeños de Lomo",
-        description:
-          "Masa wantan rellenos de lomo (06 unidades), que combina la suavidad de la masa con la intensidad y jugosidad del lomo saltado.",
-        price: "S/ 34.02",
-      },
-      {
-        name: "Tequeños de Pulpa de Cangrejo",
-        description:
-          "Masa wantan rellena de la pulpa del cangrejo (6 unidades).",
-        price: "S/ 43.74",
-      },
-      {
-        name: "Ocopa",
-        description:
-          "Salsa que se prepara licuando ají amarillo, hojas de huacatay, maní tostado, cebolla, ajos fritos y otros ingredientes; se acompaña con papas y huevos duro.",
-        price: "S/ 21.87",
-      },
-      {
-        name: "Conchitas a la Parmesana",
-        description:
-          "Conchitas gratinadas con queso parmesano, servidas en su concha. Incluye 6 unidades.",
-        price: "S/ 48.60",
-      },
-      {
-        name: "Langostinos Al Panko",
-        description:
-          "(08 Unidades) langostinos empanzados con panko cuya cobertura es perfecta para realzar su sabor y se acompañan con una salsa dulce.",
-        price: "S/ 42.53",
-      },
-    ],
-  },
-  {
-    id: "duos-y-trios",
-    name: "Duos y Trios Marinos",
-    items: [
-      {
-        name: "Carretillero",
-        description:
-          "Cebiche de pescado acompañado de chicharrón de calamar, en un clásico combinado.",
-        price: "S/ 53.46",
-      },
-      {
-        name: "Marinero",
-        description:
-          "Arroz con mariscos acompañado de chicharrón de pota. Incluye calamares y salsa de tomate.",
-        price: "S/ 36.00",
-      },
-      {
-        name: "Clasico Al Vs U",
-        description:
-          "Ceviche de pescado con conchas negras, acompañado de choclo y cebolla. Un clásico fresco y sabroso.",
-        price: "S/ 50.40",
-      },
-      {
-        name: "Maremoto",
-        description:
-          "Ceviche de pescado, chicharrón de pota y arroz con mariscos. Incluye rodajas de limón y cilantro.",
-        price: "S/ 43.20",
-      },
-      {
-        name: "Trio Maria Pastor",
-        description:
-          "Causa de langostinos, cebiche de pescado y arroz con mariscos.",
-        price: "S/ 66.83",
-      },
-      {
-        name: "Dúo Maria Pastor",
-        description: "Cremoso arroz con mariscos y cebiche de pescado.",
-        price: "S/ 54.68",
-      },
-    ],
-  },
-  {
-    id: "ceviches-y-tiraditos",
-    name: "Ceviches y Tiraditos",
-    items: [
-      {
-        name: "Tiradito 3 Estaciones",
-        description:
-          "Tiradito de pescado con salsas de ajonjolí, rocoto y ají amarillo, decorado con hierbas frescas.",
-        price: "S/ 40.50",
-      },
-    ],
-  },
-  {
-    id: "marinos-frios",
-    name: "Marinos Frios",
-    items: [
-      {
-        name: "Tiradito Tradicional",
-        description:
-          "Finas láminas de pescado, marinado al estilo tradicional.",
-        price: "S/ 41.31",
-      },
-      {
-        name: "Cebi-Causa",
-        description:
-          "Causa rellena de cebiche de pescado, con capas de papa, palta y cebolla. Decorada con lechuga y ají.",
-        price: "S/ 58.32",
-      },
-      {
-        name: "Cebiche de Pulpo",
-        description:
-          "Cebiche de pulpo acompañado de choclo, canchita y camote.",
-        price: "S/ 51.03",
-      },
-      {
-        name: "Cebiche de Pescado con Pulpo",
-        description:
-          "Cebiche de pescado con pulpo acompañado de tierno choclo, camote y canchita.",
-        price: "S/ 58.32",
-      },
-      {
-        name: "Ceviche de Pescado",
-        description: "Ceviche de pescado con camote y choclo.",
-        price: "S/ 46.17",
-      },
-      {
-        name: "Cebiche de Champiñones",
-        description:
-          "Cebiche de champiñones acompañado de tierno choclo, camote y canchita.",
-        price: "S/ 41.31",
-      },
-      {
-        name: "Ceviche Mixto",
-        description: "Ceviche de mariscos con pescado, camote y choclo.",
-        price: "S/ 48.60",
-      },
-    ],
-  },
-  {
-    id: "marinos-calientes",
-    name: "Marinos Calientes",
-    items: [
-      {
-        name: "Tallarines Verdes con Milanesa",
-        description: "Tallarines verdes con milanesa de pescado.",
-        price: "S/ 46.17",
-      },
-      {
-        name: "Chicharrón de Calamar",
-        description: "Aros de calamar fritos con yuca dorada y salsa criolla.",
-        price: "S/ 46.17",
-      },
-      {
-        name: "Pescado en Salsa Bechamel con Champiñones",
-        description:
-          "Filete de pescado bañado en una salsa blanca a base de champiñones.",
-        price: "S/ 48.60",
-      },
-      {
-        name: "Pescado a la Chorrillana",
-        description:
-          "Filete de pescado salteado con cebollas, aromatizado con ajíes peruanos y flameado en vino tinto.",
-        price: "S/ 48.60",
-      },
-      {
-        name: "Tacu Tacu Salsa de Mariscos",
-        description: "Tacu tacu de frejoles con salsa de mariscos.",
-        price: "S/ 53.46",
-      },
-      {
-        name: "Chicharrón de Pescado",
-        description:
-          "Chicharrón de pescado acompañado de yuca frita y salsa criolla.",
-        price: "S/ 48.60",
-      },
-      {
-        name: "Chicharrón Mixto",
-        description:
-          "Chicharrón de mariscos con pescado, yuca y salsa criolla.",
-        price: "S/ 53.46",
-      },
-      {
-        name: "Jalea Mixta",
-        description:
-          "Jalea Mixta con pescado, mariscos, yuca frita y salsa criolla.",
-        price: "S/ 70.47",
-      },
-      {
-        name: "Pescado a la Plancha",
-        description:
-          "Pescado a la plancha acompañado de arroz, yuca y salsa criolla.",
-        price: "S/ 43.74",
-      },
-      {
-        name: "Milanesa de Pescado",
-        description:
-          "Milanesa de pescado acompañada de papas fritas y arroz graneado.",
-        price: "S/ 46.17",
-      },
-      {
-        name: "Tacu Tacu Filete de Pescado",
-        description:
-          "Tacu tacu a base de frejoles con pescado y sarza criolla.",
-        price: "S/ 43.74",
-      },
-      {
-        name: "Filete Pescado en Salsa Oriental",
-        description:
-          "Pescado con col china, holantao, frejolito chino, champiñones, pimiento rojo y arroz.",
-        price: "S/ 46.17",
-      },
-      {
-        name: "Pescado en Salsa de Mariscos",
-        description:
-          "Filete de pescado en salsa de mariscos especial, salsa madre, crema de leche, vino blanco y hierbas aromáticas.",
-        price: "S/ 53.46",
-      },
-      {
-        name: "Pescado a Lo Macho",
-        description:
-          "Pescado a Lo Macho: filete de pescado cubierto con salsa de mariscos, acompañado de arroz y papas doradas.",
-        price: "S/ 55.89",
-      },
-      {
-        name: "Tacu Tacu Salsa de Langostinos",
-        description:
-          "Tacu tacu de frejoles acompañado de salsa de langostinos, decorado con queso rallado y rodajas de ají amarillo.",
-        price: "S/ 48.60",
-      },
-      {
-        name: "Spaguettis en Salsa de Mariscos",
-        description: "Cremosa salsa de mariscos junto con spaguettis al dente.",
-        price: "S/ 48.60",
-      },
-      {
-        name: "Spaguettis en Salsa de Langostinos",
-        description:
-          "Cremosa salsa de langostinos junto con spaguettis al dente.",
-        price: "S/ 51.03",
-      },
-      {
-        name: "Pulpo a la Parrilla en Chimichurri",
-        description:
-          "Tierno pulpo a la parrilla acompañado de salsa chimichurri.",
-        price: "S/ 60.75",
-      },
-    ],
-  },
-  {
-    id: "criollo",
-    name: "Criollo",
-    items: [
-      {
-        name: "Tallarines Verdes con Bisteck",
-        description:
-          "Spaguettis con salsa pesto peruano y bisteck a la plancha.",
-        price: "S/ 38.88",
-      },
-      {
-        name: "Lomo Saltado",
-        description:
-          "Lomo saltado con arroz, papas fritas, cebolla, tomate y ají.",
-        price: "S/ 38.88",
-      },
-      {
-        name: "Seco de Res con Frejoles",
-        description:
-          "Seco limeño con frejoles rojos, arroz blanco y sarza criolla.",
-        price: "S/ 31.59",
-      },
-      {
-        name: "Tacu Tacu Lomo Al Jugo",
-        description:
-          "Tacu tacu de frejoles acompañado de lomo al jugo con cebolla y tomate.",
-        price: "S/ 43.74",
-      },
-      {
-        name: "Fetuccini a la Huancaina",
-        description:
-          "Fetuccini en salsa a la huancaína con lomo fino a la plancha.",
-        price: "S/ 58.32",
-      },
-      {
-        name: "Lomo Fino Saltado",
-        description:
-          "Lomo fino saltado acompañado con arroz y papas amarillas fritas.",
-        price: "S/ 53.46",
-      },
-      {
-        name: "Tallarin Saltado de Pollo",
-        description:
-          "Tallarín saltado al estilo criollo con cebolla y tomate, trozos de pollo.",
-        price: "S/ 36.45",
-      },
-      {
-        name: "Tallarín Saltado de Carne",
-        description:
-          "Tallarín saltado al estilo criollo con cebolla y tomate, trozos de lomo.",
-        price: "S/ 38.88",
-      },
-      {
-        name: "Seco de Cabrito",
-        description:
-          "Seco de cabrito con loche, chicha de jora, cerveza negra, acompañado de arroz, frejoles y sarza criolla.",
-        price: "S/ 54.68",
-      },
-      {
-        name: "Pollada",
-        description:
-          "Pollo frito acompañado de papas doradas, arroz graneado y ensalada fresca.",
-        price: "S/ 36.45",
-      },
-      {
-        name: "Dieta de Pollo",
-        description:
-          "Caldo de pollo con fideos, trozos de pollo, zanahoria y apio.",
-        price: "S/ 34.02",
-      },
-      {
-        name: "Pollo a la Plancha",
-        description:
-          "Pechuga de pollo a la plancha, acompañada de romero fresco. Ideal para una comida ligera.",
-        price: "S/ 34.02",
-      },
-      {
-        name: "Chaufa de Pollo",
-        description:
-          "Chaufa criollo con ajonjolí, ostión, pollo y cebolla china.",
-        price: "S/ 29.16",
-      },
-      {
-        name: "Arroz con Pato",
-        description:
-          "Arroz verde con pato, loche, chicha de jora y cerveza negra. Acompañado de ensalada criolla y palta.",
-        price: "S/ 54.68",
-      },
-      {
-        name: "Arroz con Pollo",
-        description:
-          "Arroz con pollo acompañado de sarza criolla, con rodajas de tomate y cebolla. Incluye guarnición de verduras.",
-        price: "S/ 31.59",
-      },
-    ],
-  },
-  {
-    id: "pescados-enteros",
-    name: "Pescados Enteros",
-    items: [
-      {
-        name: "Cabrilla Frita",
-        description:
-          "Pescado cabrilla entero 500 g con arroz, yucas fritas y sarza criolla.",
-        price: "S/ 60.75",
-      },
-      {
-        name: "Cabrilla en Salsa de Mariscos",
-        description:
-          "Pescado cabrilla frito en salsa de mariscos con arroz y papas doradas fritas.",
-        price: "S/ 75.33",
-      },
-      {
-        name: "Tacu Tacu con Cabrila Frita",
-        description:
-          "Tacu tacu de frejoles con cabrilla frita y sarza criolla.",
-        price: "S/ 70.47",
-      },
-      {
-        name: "Tacu Tacu con Cabrilla",
-        description:
-          "Tacu tacu acompañado de cabrilla en una salsa de mariscos.",
-        price: "S/ 77.76",
-      },
-      {
-        name: "Chita en Salsa de Mariscos",
-        description:
-          "Pescado chita 1/2 k frito en salsa de mariscos con arroz y papa dorada frita.",
-        price: "S/ 75.33",
-      },
-      {
-        name: "Tacu Tacu Salsa de Mariscos",
-        description: "Tacu tacu de frejoles bañado de salsa de mariscos.",
-        price: "S/ 69.30",
-      },
-    ],
-  },
-  {
-    id: "fuentes",
-    name: "Fuentes",
-    items: [
-      {
-        name: "Fuente Ceviche de Pescado X6",
-        description:
-          "Ceviche de pescado con camote, choclo y canchita, para 6 personas.",
-        price: "S/ 243.00",
-      },
-      {
-        name: "Fuente Ceviche de Pescado X3",
-        description:
-          "Ceviche de pescado con camote, choclo y canchita, para 3 personas.",
-        price: "S/ 133.65",
-      },
-      {
-        name: "Fuente Arroz con Mariscos X3",
-        description: "Arroz con mariscos, para 3 personas.",
-        price: "S/ 121.50",
-      },
-      {
-        name: "Fuente Chaufa de Mariscos X3",
-        description:
-          "Chaufa de mariscos para tres personas, incluye camarones, calamares y conchas.",
-        price: "S/ 111.78",
-      },
-      {
-        name: "Fuente Chaufa de Mariscos X6",
-        description: "Arroz con mariscos, para 6 personas.",
-        price: "S/ 211.41",
-      },
-    ],
-  },
-  {
-    id: "sudados-y-chupes",
-    name: "Sudados y Chupes",
-    items: [
-      {
-        name: "Sudado de Pescado",
-        description:
-          "Pescado entero cocido en chilcano con yuca, canchita, cebolla y tomate.",
-        price: "S/ 46.17",
-      },
-      {
-        name: "Chupe de Pescado",
-        description:
-          "Chupe de pescado con leche, choclo, arvejas y arroz. Incluye mariscos visibles como cangrejo y almejas.",
-        price: "S/ 48.60",
-      },
-      {
-        name: "Chupe de Mariscos",
-        description:
-          "Chupe de mariscos con leche, choclo, arvejas, papa, arroz, huevo y mariscos variados.",
-        price: "S/ 48.60",
-      },
-      {
-        name: "Parihuela Mixta",
-        description:
-          "Sopa robusta con una rica mezcla de mariscos frescos, ideal para los amantes del mar.",
-        price: "S/ 46.17",
-      },
-      {
-        name: "Chilcano de Pescado",
-        description:
-          "Caldo de pescado a base de espinazo y cabeza, con filetes de pescado blanco, ají amarillo, ajo, cebolla y limón.",
-        price: "S/ 36.45",
-      },
-      {
-        name: "Chupe de Camarones",
-        description:
-          "Chupe de camarones con camarones, choclo, cebolla and ají amarillo.",
-        price: "S/ 75.33",
-      },
-      {
-        name: "Chupe Mixto",
-        description:
-          "Chupe Mixto con mariscos, filete de pescado, papas, choclo y perejil en un caldo tradicional.",
-        price: "S/ 48.60",
-      },
-    ],
-  },
-  {
-    id: "piqueos",
-    name: "Piqueos",
-    items: [
-      {
-        name: "Alitas a Tu Estilo",
-        description:
-          "(06 Unidades) acompañadas en salsa bbq, bufalo, oriental o acevichada.",
-        price: "S/ 36.45",
-      },
-      {
-        name: "Yucas a la Huancaina",
-        description: "(08 Unidades) yucas fritas bañadas con salsa huancaina.",
-        price: "S/ 21.87",
-      },
-      {
-        name: "Tequeños de Queso",
-        description: "Tequeños de queso acompañados de salsa huancaina.",
-        price: "S/ 30.38",
-      },
-      {
-        name: "Brochetas de Pollo + Tequeños de Queso",
-        description: "Jugosos trozos de pollo al grill, 4 tequeños de queso.",
-        price: "S/ 41.40",
-      },
-      {
-        name: "Chicharrón de Pollo",
-        description:
-          "Chicharrón de pollo acompañado de papas fritas y ensalada de tomate y lechuga.",
-        price: "S/ 38.88",
-      },
-      {
-        name: "Champiñones a la Parrilla",
-        description:
-          "Champiñones a la parrilla, ideales como acompañamiento vegetal.",
-        price: "S/ 39.38",
-      },
-      {
-        name: "Langostinos Al Grill",
-        description:
-          "Un plato que ofrece la frescura y el exquisito sabor del mar.",
-        price: "S/ 50.63",
-      },
-    ],
-  },
-  {
-    id: "bebidas",
-    name: "Bebidas",
-    items: [
-      {
-        name: "Botella de Agua 500 ml",
-        description: "Botella de Agua 500 ml.",
-        price: "S/ 6.08",
-      },
-      {
-        name: "Chicha Morada 500 ml",
-        description: "Chicha morada helada.",
-        price: "S/ 12.15",
-      },
-      {
-        name: "Coca-Cola Sabor Original 410 ml",
-        description: "Gaseosa personal.",
-        price: "S/ 9.72",
-      },
-      {
-        name: "Jarra de Chicha",
-        description: "Chicha morada 1 L hecha en casa.",
-        price: "S/ 21.87",
-      },
-      {
-        name: "Inca Kola Sabor Original 400 ml",
-        description: "Gaseosa personal.",
-        price: "S/ 9.72",
-      },
-    ],
-  },
-];
+const sanityProjectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID;
+const sanityDataset = import.meta.env.PUBLIC_SANITY_DATASET;
+const makeWebhookUrl = import.meta.env.PUBLIC_MAKE_WEBHOOK_URL;
+const googleScriptUrl = import.meta.env.PUBLIC_GOOGLE_SCRIPT_URL;
+
+const client = createClient({
+  projectId: sanityProjectId,
+  dataset: sanityDataset,
+  apiVersion: "2024-06-08",
+  useCdn: false,
+});
+
+const rawCategories = await client.fetch(`
+  *[_type == "category"] | order(_createdAt asc) {
+    name,
+    "id": id.current,
+    items[]{
+      name,
+      description,
+      price,
+      "imageUrl": image.asset->url 
+    }
+  }
+`);
+
+const menuCategories = rawCategories.map((cat) => ({
+  id: cat.id,
+  name: cat.name,
+  items: cat.items
+    ? cat.items.map((item) => ({
+        name: item.name,
+        description: item.description,
+        price: `S/ ${(item.price || 0).toFixed(2)}`,
+        imageUrl: item.imageUrl
+          ? `${item.imageUrl}?w=400&q=80&auto=format`
+          : null,
+      }))
+    : [],
+}));
+---
+
 ---
 
 <Layout>
@@ -790,14 +207,85 @@ const menuCategories = [
         </div>
       </div>
 
-      <!-- Horizontal Sticky Nav -->
-      <div class="sticky top-20 z-40 bg-[#fcfaf7] border-y border-[#133c55]/10 py-3 mb-10 -mx-6 px-6 sm:mx-0 sm:px-0">
-        <div class="max-w-7xl mx-auto overflow-hidden relative" id="category-nav-container">
-          <!-- Fade edges for scroll -->
-          <div class="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#fcfaf7] to-transparent z-10 pointer-events-none"></div>
-          <div class="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#fcfaf7] to-transparent z-10 pointer-events-none"></div>
+      <div
+        class="max-w-3xl mx-auto mb-10 bg-[#133c55]/5 border border-[#133c55]/10 rounded-2xl p-5 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4 shadow-sm"
+      >
+        <div
+          class="w-10 h-10 shrink-0 bg-[#133c55]/10 rounded-full flex items-center justify-center text-[#133c55]"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615 3.001 3.001 0 0 0 3.75.615m-7.5 0h16.5m-16.5 0h.01m13.99 0a3.001 3.001 0 0 0 3.75-.615m-3.75.615H8.25m8.25 0a3.001 3.001 0 0 0 3.75.615"
+            ></path>
+          </svg>
+        </div>
+        <div class="flex-1">
+          <h4
+            class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#133c55] mb-1.5 font-mono"
+          >
+            Todos los pedidos realizados serán para recojo en tienda
+          </h4>
+          <p
+            class="text-[11px] sm:text-xs text-gray-600 font-medium leading-relaxed mb-3"
+          >
+            Puede realizar el pedido y seleccionar el recojo en el local de su
+            preferencia. Se le enviará una confirmación de WhatsApp con el link
+            de pago donde deberá enviar la constancia de su pago.
+          </p>
+          <div class="flex justify-center sm:justify-start">
+            <a
+              href="https://www.rappi.com.pe/restaurantes/11572-maria-pastor-cevicheria"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#133c55]/5 hover:bg-[#133c55]/10 text-[#133c55] hover:text-[#27b29d] text-[10px] font-bold uppercase tracking-wider rounded-lg border border-[#133c55]/10 hover:border-[#27b29d]/20 transition-all duration-300 font-mono"
+            >
+              PREFIERES DELIVERY?
+              <svg
+                class="w-3 h-3"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                stroke-width="2.5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+                ></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
 
-          <nav class="flex overflow-x-auto elegant-scrollbar gap-2 px-4 snap-x scroll-smooth pb-2" id="category-nav">
+      <div
+        class="sticky top-20 z-40 bg-[#fcfaf7] border-y border-[#133c55]/10 py-3 mb-10 -mx-6 px-6 sm:mx-0 sm:px-0"
+      >
+        <div
+          class="max-w-7xl mx-auto overflow-hidden relative"
+          id="category-nav-container"
+        >
+          <div
+            class="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#fcfaf7] to-transparent z-10 pointer-events-none"
+          >
+          </div>
+          <div
+            class="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#fcfaf7] to-transparent z-10 pointer-events-none"
+          >
+          </div>
+
+          <nav
+            class="flex overflow-x-auto elegant-scrollbar gap-2 px-4 snap-x scroll-smooth pb-2"
+            id="category-nav"
+          >
             {
               menuCategories.map((category) => (
                 <a
@@ -818,70 +306,103 @@ const menuCategories = [
         <main class="space-y-16 pb-24">
           {
             menuCategories.map((category, catIdx) => (
-              <section
-                id={category.id}
-                class="scroll-mt-36 relative"
-              >
+              <section id={category.id} class="scroll-mt-36 relative">
                 <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-black mb-8 border-b-2 border-black/5 pb-4 font-serif normal-case">
                   {category.name}
                 </h3>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                  {category.items.map((item, itemIdx) => {
-                    // Seleccionar imagen alternada como placeholder
-                    const imgIndex = (catIdx * 10 + itemIdx) % 3;
-                    const placeImages = [mesaMarinaImg, cevicheHistoriaImg, heroBgImg];
-                    
-                    return (
-                      <div class="flex flex-row bg-white rounded-2xl border border-gray-100 shadow-[0_4px_15px_-10px_rgba(0,0,0,0.08)] overflow-hidden transition-all duration-300 hover:shadow-[0_8px_25px_-10px_rgba(0,0,0,0.12)] h-[140px] group">
-                        
-                        <div class="w-[40%] bg-gray-50 shrink-0 relative overflow-hidden">
-                          <Image
-                            src={placeImages[imgIndex]}
+                  {category.items.map((item) => (
+                    <div class="flex flex-row bg-white rounded-2xl border border-gray-100 shadow-[0_4px_15px_-10px_rgba(0,0,0,0.08)] overflow-hidden transition-all duration-300 hover:shadow-[0_8px_25px_-10px_rgba(0,0,0,0.12)] h-[140px] group">
+                      <div class="w-[40%] bg-gray-50 shrink-0 relative overflow-hidden flex items-center justify-center">
+                        {item.imageUrl ? (
+                          <img
+                            src={item.imageUrl}
                             alt={item.name}
                             class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                            format="webp"
                             loading="lazy"
                           />
-                        </div>
-                        
-                        <div class="w-[60%] p-4 flex flex-col justify-between relative">
-                          <div class="pr-2">
-                            <h4 class="text-[14px] sm:text-[16px] font-bold font-serif text-black leading-tight mb-1.5 line-clamp-2">
-                              {item.name}
-                            </h4>
-                            {item.description && (
-                              <p class="text-[10px] sm:text-[11px] text-gray-500 font-medium leading-snug line-clamp-2 sm:line-clamp-3">
-                                {item.description}
-                              </p>
-                            )}
-                          </div>
-                          
-                          <div class="mt-2 flex items-end justify-between">
-                            <span class="font-mono font-bold text-[13px] text-black">
-                              {item.price}
-                            </span>
-                          </div>
-                          
-                          <div class="absolute bottom-3 right-3 interactive-cart-wrapper" data-name={item.name} data-price={item.price.replace("S/ ", "")}>
-                            <button class="add-btn-initial w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#133c55] text-white flex items-center justify-center hover:bg-[#27b29d] transition-colors shadow-sm">
-                              <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
-                            </button>
-                            <div class="qty-controls hidden flex items-center bg-[#133c55] rounded-full h-7 sm:h-8 px-1 shadow-md text-white transition-all">
-                              <button class="btn-decrease w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center hover:bg-white/20 rounded-full transition-colors">
-                                <!-- El icono (Tacho o Menos) se gestiona por JS -->
-                              </button>
-                              <span class="qty-display w-4 sm:w-5 text-center text-[10px] sm:text-xs font-bold">1</span>
-                              <button class="btn-increase w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center hover:bg-white/20 rounded-full transition-colors">
-                                <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
-                              </button>
-                            </div>
-                          </div>
+                        ) : (
+                          <svg
+                            class="w-8 h-8 text-gray-300"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="1.5"
+                              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2 2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                            />
+                          </svg>
+                        )}
+                      </div>
+
+                      <div class="w-[60%] p-4 flex flex-col justify-between relative">
+                        <div class="pr-2">
+                          <h4 class="text-[14px] sm:text-[16px] font-bold font-serif text-black leading-tight mb-1.5 line-clamp-2">
+                            {item.name}
+                          </h4>
+                          {item.description && (
+                            <p class="text-[10px] sm:text-[11px] text-gray-500 font-medium leading-snug line-clamp-2 sm:line-clamp-3">
+                              {item.description}
+                            </p>
+                          )}
                         </div>
 
+                        <div class="mt-2 flex items-end justify-between">
+                          <span class="font-mono font-bold text-[13px] text-black">
+                            {item.price}
+                          </span>
+                        </div>
+
+                        <div
+                          class="absolute bottom-3 right-3 interactive-cart-wrapper"
+                          data-name={item.name}
+                          data-price={item.price.replace("S/ ", "")}
+                          data-image={item.imageUrl || ""}
+                        >
+                          <button class="add-btn-initial w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#133c55] text-white flex items-center justify-center hover:bg-[#27b29d] transition-colors shadow-sm">
+                            <svg
+                              class="w-3.5 h-3.5 sm:w-4 sm:h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2.5"
+                                d="M12 4v16m8-8H4"
+                              />
+                            </svg>
+                          </button>
+                          <div class="qty-controls hidden flex items-center bg-[#133c55] rounded-full h-7 sm:h-8 px-1 shadow-md text-white transition-all">
+                            <button class="btn-decrease w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center hover:bg-white/20 rounded-full transition-colors" />
+                            <span class="qty-display w-4 sm:w-5 text-center text-[10px] sm:text-xs font-bold">
+                              1
+                            </span>
+                            <button class="btn-increase w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center hover:bg-white/20 rounded-full transition-colors">
+                              <svg
+                                class="w-3 h-3 sm:w-3.5 sm:h-3.5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  stroke-width="2.5"
+                                  d="M12 4v16m8-8H4"
+                                />
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
                       </div>
-                    );
-                  })}
+                    </div>
+                  ))}
                 </div>
               </section>
             ))
@@ -920,7 +441,8 @@ const menuCategories = [
           >0</span
         >
       </div>
-      <span class="font-bold text-xs uppercase tracking-wider hidden sm:block z-10 font-mono"
+      <span
+        class="font-bold text-xs uppercase tracking-wider hidden sm:block z-10 font-mono"
         >Ver Pedido (S/ <span id="cart-total-floating">0.00</span>)</span
       >
     </button>
@@ -936,10 +458,10 @@ const menuCategories = [
     id="cart-sidebar"
     class="fixed top-0 right-0 h-full w-full sm:w-[420px] bg-[#fcfaf7] shadow-[-10px_0_40px_-10px_rgba(0,0,0,0.1)] z-50 transform translate-x-full transition-transform duration-500 flex flex-col border-l border-gray-200"
   >
-    <div
-      class="p-6 pb-2 flex justify-between items-center"
-    >
-      <h2 class="text-[22px] font-bold text-black tracking-tight uppercase">Tu Carrito <span id="cart-title-count">(0)</span></h2>
+    <div class="p-6 pb-2 flex justify-between items-center">
+      <h2 class="text-[22px] font-bold text-black tracking-tight uppercase">
+        Tu Carrito <span id="cart-title-count">(0)</span>
+      </h2>
       <button
         id="close-cart-btn"
         class="p-1.5 text-gray-500 hover:text-black border border-gray-300 rounded-lg transition-colors bg-white hover:bg-gray-50"
@@ -960,7 +482,10 @@ const menuCategories = [
       </button>
     </div>
 
-    <div id="cart-items-container" class="flex-1 overflow-y-auto px-6 py-4 space-y-0 divide-y divide-gray-100">
+    <div
+      id="cart-items-container"
+      class="flex-1 overflow-y-auto px-6 py-4 space-y-0 divide-y divide-gray-100"
+    >
       <div
         id="empty-cart-msg"
         class="h-full flex flex-col items-center justify-center text-center opacity-40 space-y-4 border-none"
@@ -986,7 +511,9 @@ const menuCategories = [
     <div class="p-6 bg-[#fcfaf7] space-y-5 border-t border-gray-100">
       <div class="flex justify-between items-end font-bold text-black">
         <span class="text-[17px]">Subtotal</span>
-        <span class="text-[17px] font-mono">S/ <span id="cart-total-sidebar">0.00</span></span>
+        <span class="text-[17px] font-mono"
+          >S/ <span id="cart-total-sidebar">0.00</span></span
+        >
       </div>
       <button
         id="open-checkout-modal-btn"
@@ -1038,6 +565,10 @@ const menuCategories = [
             type="text"
             id="cliente-nombre"
             required
+            minlength="3"
+            maxlength="50"
+            pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
+            title="Ingresa tu nombre y apellido (solo letras y espacios, mínimo 3 caracteres)"
             class="w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:border-[#27b29d] focus:ring-1 focus:ring-[#27b29d] outline-none transition-all text-black font-medium"
             placeholder="Ej. Juan Pérez"
           />
@@ -1052,9 +583,10 @@ const menuCategories = [
             type="tel"
             id="cliente-celular"
             required
-            pattern="[0-9]{9}"
+            pattern="9[0-9]{8}"
+            title="El celular debe empezar con 9 y tener exactamente 9 dígitos (ej: 999888777)"
             class="w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:border-[#27b29d] focus:ring-1 focus:ring-[#27b29d] outline-none transition-all text-black font-medium font-mono"
-            placeholder="999 888 777"
+            placeholder="999888777"
           />
         </div>
 
@@ -1069,9 +601,9 @@ const menuCategories = [
             class="w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:border-[#27b29d] focus:ring-1 focus:ring-[#27b29d] outline-none transition-all text-black font-bold bg-white cursor-pointer appearance-none font-mono"
           >
             <option value="" disabled selected>Selecciona una sede...</option>
-            <option value="Miraflores">Sede Miraflores</option>
-            <option value="San Borja">Sede San Borja</option>
-            <option value="Surco">Sede Surco</option>
+            <option value="Jesus Maria">Sede Jesús María</option>
+            <option value="San Isidro">Sede San Isidro</option>
+            <option value="Surquillo">Sede Surquillo</option>
           </select>
         </div>
 
@@ -1085,9 +617,67 @@ const menuCategories = [
       </form>
     </div>
   </div>
+
+  <div
+    id="success-overlay"
+    class="fixed inset-0 bg-[#0b171c]/90 backdrop-blur-md z-[70] hidden flex items-center justify-center p-4 transition-opacity duration-500 opacity-0"
+  >
+    <div
+      id="success-modal"
+      class="bg-[#fcfaf7] rounded-[2rem] w-full max-w-md shadow-2xl p-8 flex flex-col items-center justify-center text-center transform scale-95 transition-transform duration-500 border border-white/10"
+    >
+      <div
+        class="relative w-32 h-32 rounded-full bg-[#0b171c]/95 border border-[#27b29d]/40 flex items-center justify-center p-0 overflow-hidden shadow-2xl mb-6"
+      >
+        <Image
+          src={logo}
+          alt="Logo María Pastor"
+          class="w-[105%] object-cover rounded-full"
+          format="webp"
+          loading="lazy"
+        />
+      </div>
+
+      <div
+        class="w-9 h-9 bg-[#27b29d]/10 border border-[#27b29d]/30 rounded-full flex items-center justify-center mb-5 text-[#27b29d] animate-bounce"
+      >
+        <svg
+          class="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          stroke-width="3"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M5 13l4 4L19 7"></path>
+        </svg>
+      </div>
+
+      <h3 class="text-2xl font-serif font-bold text-[#133c55] mb-3">
+        ¡Orden Recibida!
+      </h3>
+
+      <p class="text-sm text-gray-600 font-medium leading-relaxed mb-6 px-4">
+        Estamos verificando la disponibilidad en la cocina de <span
+          id="success-sede"
+          class="font-bold text-[#d31a20]"></span>.<br class="mb-2" />Te
+        enviaremos la confirmación y el link de pago por WhatsApp en los
+        próximos 2 minutos.
+      </p>
+
+      <button
+        id="close-success-btn"
+        class="w-full bg-[#133c55] hover:bg-[#0f2d40] text-white font-bold uppercase tracking-widest text-[12px] py-4 rounded-xl transition-all shadow-sm hover:shadow-md font-mono"
+      >
+        Entendido
+      </button>
+    </div>
+  </div>
 </Layout>
 
-<script is:inline>
+<script define:vars={{ makeWebhookUrl, googleScriptUrl }} is:inline>
   document.addEventListener("DOMContentLoaded", () => {
     // Scrollspy Logic
     const sections = document.querySelectorAll("main > section");
@@ -1122,13 +712,26 @@ const menuCategories = [
     window.addEventListener("scroll", changeActiveLink);
 
     // ==========================================
-    // LÓGICA E-COMMERCE Y ENVÍO A MAKE
+    // LÓGICA E-COMMERCE Y CONFIGURACIÓN DE WEBHOOK
     // ==========================================
-    // URL DEL WEBHOOK DE MAKE (¡Reemplazar con tu URL real!)
-    const MAKE_WEBHOOK_URL =
-      "https://hook.us2.make.com/ke71rpnb7h7tur6f9dwifutufskihyuy";
 
-    let cart = JSON.parse(localStorage.getItem("maria_pastor_cart")) || [];
+    // [CONFIGURACIÓN] Elige el destino del webhook descomentando la opción deseada:
+
+    // --- OPCIÓN A: MAKE (ACTUAL) ---
+    // const WEBHOOK_URL = makeWebhookUrl;
+    // const IS_GOOGLE_SCRIPT = false;
+
+    // --- OPCIÓN B: GOOGLE APPS SCRIPT (FUTURO) ---
+    const WEBHOOK_URL = googleScriptUrl;
+    const IS_GOOGLE_SCRIPT = true;
+
+    let cart = [];
+    try {
+      cart = JSON.parse(localStorage.getItem("maria_pastor_cart")) || [];
+      if (!Array.isArray(cart)) cart = [];
+    } catch (e) {
+      cart = [];
+    }
 
     const cartOverlay = document.getElementById("cart-overlay");
     const cartSidebar = document.getElementById("cart-sidebar");
@@ -1157,64 +760,59 @@ const menuCategories = [
     };
 
     const syncLocalControls = () => {
-      document.querySelectorAll(".interactive-cart-wrapper").forEach((wrapper) => {
-        const name = wrapper.dataset.name;
-        const price = parseFloat(wrapper.dataset.price);
-        
-        const initialBtn = wrapper.querySelector(".add-btn-initial");
-        const qtyControls = wrapper.querySelector(".qty-controls");
-        const btnDecrease = wrapper.querySelector(".btn-decrease");
-        const btnIncrease = wrapper.querySelector(".btn-increase");
-        const qtyDisplay = wrapper.querySelector(".qty-display");
+      document
+        .querySelectorAll(".interactive-cart-wrapper")
+        .forEach((wrapper) => {
+          const name = wrapper.dataset.name;
+          const price = parseFloat(wrapper.dataset.price);
+          const image = wrapper.dataset.image;
 
-        const cartItem = cart.find(item => item.name === name);
+          const initialBtn = wrapper.querySelector(".add-btn-initial");
+          const qtyControls = wrapper.querySelector(".qty-controls");
+          const btnDecrease = wrapper.querySelector(".btn-decrease");
+          const btnIncrease = wrapper.querySelector(".btn-increase");
+          const qtyDisplay = wrapper.querySelector(".qty-display");
 
-        if (!cartItem) {
-          // No está en el carrito: Mostrar botón inicial [+]
-          initialBtn.classList.remove("hidden");
-          qtyControls.classList.add("hidden");
-          qtyControls.classList.remove("flex");
-          
-          // Asignar evento al botón inicial para agregar 1 unidad
-          initialBtn.onclick = () => {
-            cart.push({ name, price, quantity: 1 });
-            updateCartUI();
-            playCartAnimation();
-          };
-        } else {
-          // Está en el carrito: Mostrar controles interactivos
-          initialBtn.classList.add("hidden");
-          qtyControls.classList.remove("hidden");
-          qtyControls.classList.add("flex");
-          
-          qtyDisplay.innerText = cartItem.quantity;
-          
-          // Cambiar icono del botón disminuir según la cantidad
-          if (cartItem.quantity === 1) {
-            // Mostrar Tacho de basura
-            btnDecrease.innerHTML = `<svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white hover:text-red-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>`;
+          const cartItem = cart.find((item) => item.name === name);
+
+          if (!cartItem) {
+            initialBtn.classList.remove("hidden");
+            qtyControls.classList.add("hidden");
+            qtyControls.classList.remove("flex");
+
+            initialBtn.onclick = () => {
+              cart.push({ name, price, quantity: 1, image });
+              updateCartUI();
+              playCartAnimation();
+            };
           } else {
-            // Mostrar Menos (-)
-            btnDecrease.innerHTML = `<svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M20 12H4"/></svg>`;
-          }
-          
-          // Lógica al disminuir/eliminar
-          btnDecrease.onclick = () => {
+            initialBtn.classList.add("hidden");
+            qtyControls.classList.remove("hidden");
+            qtyControls.classList.add("flex");
+
+            qtyDisplay.innerText = cartItem.quantity;
+
             if (cartItem.quantity === 1) {
-               cart = cart.filter(i => i.name !== name);
+              btnDecrease.innerHTML = `<svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white hover:text-red-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>`;
             } else {
-               cartItem.quantity--;
+              btnDecrease.innerHTML = `<svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M20 12H4"/></svg>`;
             }
-            updateCartUI();
-          };
-          
-          // Lógica al aumentar
-          btnIncrease.onclick = () => {
-            cartItem.quantity++;
-            updateCartUI();
-          };
-        }
-      });
+
+            btnDecrease.onclick = () => {
+              if (cartItem.quantity === 1) {
+                cart = cart.filter((i) => i.name !== name);
+              } else {
+                cartItem.quantity--;
+              }
+              updateCartUI();
+            };
+
+            btnIncrease.onclick = () => {
+              cartItem.quantity++;
+              updateCartUI();
+            };
+          }
+        });
     };
 
     const updateCartUI = () => {
@@ -1235,7 +833,7 @@ const menuCategories = [
       }
 
       renderCartItems();
-      syncLocalControls(); // Sincroniza la UI de las tarjetas en la carta
+      syncLocalControls();
       localStorage.setItem("maria_pastor_cart", JSON.stringify(cart));
     };
 
@@ -1254,15 +852,17 @@ const menuCategories = [
 
       cart.forEach((item, index) => {
         const div = document.createElement("div");
-        div.className = "w-full bg-transparent group border-b border-gray-100 last:border-0";
-        // Asignar una de las imágenes de manera seudoaleatoria
-        const placeImages = ['/src/assets/img/mesa_marina.png', '/src/assets/img/ceviche_historia.png', '/src/assets/img/hero.png'];
-        const imgIndex = index % 3;
+        div.className =
+          "w-full bg-transparent group border-b border-gray-100 last:border-0";
+        const isDefaultLogo = !item.image;
+        const itemImage = item.image || "/src/assets/img/logo.png";
+        const bgClass = isDefaultLogo ? "bg-[#0b171c] p-2" : "bg-gray-100";
+        const imgFitClass = isDefaultLogo ? "object-contain" : "object-cover";
 
         div.innerHTML = `
           <div class="py-5 flex gap-4 w-full relative">
-            <div class="w-16 h-16 shrink-0 bg-gray-100 rounded-xl overflow-hidden border border-black/5">
-              <img src="${placeImages[imgIndex]}" class="w-full h-full object-cover" alt="${item.name}" />
+            <div class="w-16 h-16 shrink-0 ${bgClass} rounded-xl overflow-hidden border border-black/5 flex items-center justify-center">
+              <img src="${itemImage}" class="w-full h-full ${imgFitClass}" alt="${item.name}" />
             </div>
             
             <div class="flex-1 flex flex-col justify-between pt-1">
@@ -1274,9 +874,10 @@ const menuCategories = [
               <div class="flex justify-between items-center w-full">
                 <div class="flex items-center gap-4 bg-gray-50/50 rounded-full px-3 py-1.5 border border-black/5">
                   <button class="cart-qty-minus flex items-center justify-center text-gray-500 hover:text-red-500 transition-colors" data-index="${index}">
-                    ${item.quantity === 1 
-                      ? '<svg class="w-3.5 h-3.5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>'
-                      : '<svg class="w-3.5 h-3.5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 12H4"/></svg>'
+                    ${
+                      item.quantity === 1
+                        ? '<svg class="w-3.5 h-3.5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>'
+                        : '<svg class="w-3.5 h-3.5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 12H4"/></svg>'
                     }
                   </button>
                   <span class="text-xs font-bold w-4 text-center text-black pointer-events-none">${item.quantity}</span>
@@ -1312,7 +913,6 @@ const menuCategories = [
       });
     };
 
-    // Toggle de Paneles
     const toggleCart = () => {
       cartSidebar.classList.toggle("translate-x-full");
       cartOverlay.classList.toggle("hidden");
@@ -1357,21 +957,15 @@ const menuCategories = [
     checkoutForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
+      if (cart.length === 0) {
+        alert("El Carrito está vacío.");
+        return;
+      }
+
       const nombre = document.getElementById("cliente-nombre").value;
       const celular = document.getElementById("cliente-celular").value;
       const sede = document.getElementById("cliente-sede").value;
 
-      const totalPrice = cart
-        .reduce((sum, item) => sum + item.price * item.quantity, 0)
-        .toFixed(2);
-
-      // Formatear el pedido como texto legible para el Telegram de los cocineros
-      let pedidoTexto = cart
-        .map(
-          (item) =>
-            `${item.quantity}x ${item.name} (S/ ${(item.price * item.quantity).toFixed(2)})`,
-        )
-        .join("\n");
       const idAleatorio = Math.floor(Math.random() * 9000) + 1000;
 
       const payload = {
@@ -1379,8 +973,7 @@ const menuCategories = [
         cliente: nombre,
         celular: celular,
         sede: sede,
-        detalle: pedidoTexto,
-        total: totalPrice,
+        items: cart.map(item => ({ name: item.name, quantity: item.quantity }))
       };
 
       submitOrderBtn.innerHTML = `
@@ -1390,35 +983,73 @@ const menuCategories = [
       submitOrderBtn.disabled = true;
 
       try {
-        if (MAKE_WEBHOOK_URL === "PEGAR_AQUI_TU_WEBHOOK_DE_MAKE") {
-          alert(
-            "¡Atención Desarrollador! No has pegado la URL del Webhook de Make en el código (Línea 667).",
-          );
+        if (
+          !WEBHOOK_URL ||
+          WEBHOOK_URL.includes("TU_NUEVA_URL_AQUI") ||
+          WEBHOOK_URL.includes("PEGAR_AQUI")
+        ) {
+          alert("¡Atención! Falta configurar la URL del Webhook.");
           submitOrderBtn.innerHTML = "Enviar Orden a Cocina";
           submitOrderBtn.disabled = false;
           return;
         }
 
-        const response = await fetch(MAKE_WEBHOOK_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
+        let envioExitoso = false;
 
-        if (response.ok) {
-          // Limpiar Carrito y Mostrar Éxito
+        if (IS_GOOGLE_SCRIPT) {
+          const response = await fetch(WEBHOOK_URL, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify(payload),
+          });
+          const responseData = await response.json();
+          if (responseData.status === "success") {
+            envioExitoso = true;
+          }
+        } else {
+          const response = await fetch(WEBHOOK_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+          if (response.ok) {
+            envioExitoso = true;
+          }
+        }
+
+        if (envioExitoso) {
           cart = [];
           updateCartUI();
           toggleCheckoutModal();
 
-          alert(
-            `👨‍🍳 ¡Orden enviada a la cocina de ${sede}!\n\nEstamos verificando la disponibilidad de tus platos. Te enviaremos la confirmación y el link de pago por WhatsApp en los próximos 2 minutos.`,
-          );
-          window.scrollTo(0, 0);
+          submitOrderBtn.innerHTML = "Enviar Orden a Cocina";
+          submitOrderBtn.disabled = false;
+          checkoutForm.reset();
+
+          const successOverlay = document.getElementById("success-overlay");
+          const successModal = document.getElementById("success-modal");
+          document.getElementById("success-sede").innerText = sede;
+
+          successOverlay.classList.remove("hidden");
+          setTimeout(() => {
+            successOverlay.classList.remove("opacity-0");
+            successModal.classList.remove("scale-95");
+          }, 50);
+
+          const closeSuccessBtn = document.getElementById("close-success-btn");
+          closeSuccessBtn.onclick = () => {
+            successOverlay.classList.add("opacity-0");
+            successModal.classList.add("scale-95");
+            setTimeout(() => {
+              successOverlay.classList.add("hidden");
+              window.scrollTo(0, 0);
+            }, 300);
+          };
         } else {
           throw new Error("Fallo en la red");
         }
       } catch (error) {
+        console.error("Error en el envío:", error);
         alert("Hubo un problema de conexión. Intenta nuevamente.");
         submitOrderBtn.innerHTML = "Enviar Orden a Cocina";
         submitOrderBtn.disabled = false;
@@ -1440,8 +1071,7 @@ const menuCategories = [
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  
-  /* Elegant Custom Scrollbar for Nav */
+
   .elegant-scrollbar::-webkit-scrollbar {
     height: 4px;
   }
