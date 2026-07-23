@@ -4,7 +4,7 @@
 [![Sanity CMS](https://img.shields.io/badge/Sanity-v3.x-red?logo=sanity&logoColor=white)](https://www.sanity.io/)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v3.x-38bdf8?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 
-Plataforma web de última generación para **Cebichería María Pastor**, diseñada para ofrecer una experiencia gastronómica digital rápida, elegante e interactiva. Cuenta con una landing page de alto impacto, carta digital interactiva con carrito de compras, gestión de contenido Headless con Sanity CMS y un sistema seguro de pedidos por WhatsApp con validación de precios en servidor.
+Plataforma web de última generación para **Cebichería María Pastor**, diseñada para ofrecer una experiencia gastronómica digital rápida, elegante e interactiva. Cuenta con una landing page de alto impacto, carta digital interactiva con carrito de compras, gestión de contenido Headless con Sanity CMS y un sistema seguro de pedidos por WhatsApp con validación de precios en servidor. Este es un proyecto personal desarrollado con fines educativos.
 
 ---
 
@@ -134,6 +134,3 @@ npm run dev
 
 ---
 
-## Licencia
-
-Este proyecto es software privado desarrollado exclusivamente para **Cebichería María Pastor**. Todos los derechos reservados.
