@@ -89,9 +89,9 @@ const items = [
             class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 md:gap-8 reveal reveal-up reveal-delay-100 reveal-duration-1000"
         >
             {items.map((item) => (
-                <div class="group relative overflow-hidden rounded-none aspect-[4/3] bg-slate-900 border border-white/5 hover:border-[#27b29d]/30 transition-all duration-500 shadow-md hover:shadow-xl hover:shadow-[#27b29d]/5">
+                <div class="group relative overflow-hidden rounded-none aspect-[4/3] bg-[#dceae7] border border-[#173f50]/10">
                     <!-- Image -->
-                    <div class="w-full h-full scale-100 group-hover:scale-105 transition-transform duration-700 ease-out">
+                    <div class="w-full h-full ">
                         <Image
                             src={item.src}
                             alt={item.alt}
@@ -103,7 +103,7 @@ const items = [
                     </div>
                     
                     <!-- Overlay (no text) -->
-                    <div class="absolute inset-0 bg-[#0a1118]/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                    <div class="absolute inset-0 bg-transparent pointer-events-none">
                     </div>
                 </div>
             ))}

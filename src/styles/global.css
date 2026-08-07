@@ -8,26 +8,22 @@
 
 /* Brand palette and custom utilities */
 :root {
-  --color-primary: #27b29d; /* Turquoise */
-  --color-accent: #d31a20;  /* Crimson */
-  --color-dark: #133c55;   /* Deep Marine */
-  --color-gold: #d4af37;   /* Premium Gold */
-  --color-bg: #f5f9fb;    /* Light cyan */
-  --color-card-bg: rgba(255,255,255,0.45);
-  --color-card-border: rgba(19,60,85,0.12);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg: #0b171c;
-    --color-card-bg: rgba(19,60,85,0.45);
-    --color-card-border: rgba(255,255,255,0.15);
-  }
+  --color-primary: #27b29d;
+  --color-primary-deep: #168878;
+  --color-primary-soft: #e8f6f3;
+  --color-accent: #df6b4f;
+  --color-dark: #173f50;
+  --color-ink: #18333d;
+  --color-muted: #64777c;
+  --color-bg: #fbfaf6;
+  --color-surface: #f2f8f6;
+  --color-card-bg: #ffffff;
+  --color-card-border: rgba(23, 63, 80, 0.13);
 }
 
 @layer utilities {
   .glass-card {
-    @apply bg-[var(--color-card-bg)] backdrop-blur-xl border border-[var(--color-card-border)] rounded-2xl shadow-lg transition-all duration-300;
+    @apply bg-[var(--color-card-bg)] border border-[var(--color-card-border)] rounded-2xl;
   }
   .btn-primary {
     @apply bg-gradient-to-r from-[var(--color-primary)] to-[#1f9381] hover:from-[#1f9381] hover:to-[#177a6b] text-white font-bold uppercase tracking-wider py-2 px-5 rounded-full shadow-md hover:shadow-lg transition-all;
@@ -91,3 +87,25 @@
   opacity: 1;
   transform: translate(0) scale(1);
 }
+
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: Outfit, sans-serif;
+  font-weight: 400;
+}
+
+h1, h2, h3, h4, .font-serif { font-family: "Playfair Display", serif; text-wrap: balance; }
+p { text-wrap: pretty; }
+#nosotros { background: #f1f8f6; color: var(--color-ink); }
+#menu-preview, #ubicanos { background: #fbfaf6; }
+#galeria { background: #eaf5f4; color: var(--color-ink); }
+#nosotros h2, #galeria h2 { color: var(--color-dark); }
+#nosotros p, #galeria p { color: var(--color-muted); }
+#nosotros strong { color: var(--color-dark); }
+#galeria > div[class*="blur"], #nosotros > div[class*="blur"], #ubicanos > div[class*="blur"] { display: none; }
+.location-card, .location-card:hover, .location-card.active-card { transform: none !important; box-shadow: none !important; }
+.location-card > div:first-child { display: none; }
+a[class*="shadow"], button[class*="shadow"] { box-shadow: none !important; }
+a[class*="hover:-translate"], button[class*="hover:-translate"] { transform: none !important; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
