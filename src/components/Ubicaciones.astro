@@ -226,6 +226,13 @@ import pezVintage from "../assets/img/decoraciones/pez-vintage.png";
                     >
                     <div class="flex gap-4 shrink-0 font-medium">
                         <a
+                            id="btn-location-page"
+                            href="/cevicheria-jesus-maria"
+                            class="text-[#173f50] flex items-center gap-1.5"
+                        >
+                            Ver información de sede
+                        </a>
+                        <a
                             id="btn-google-maps"
                             href="https://maps.google.com/?q=Av.+Cuba+1200,+Jesús+María,+Lima"
                             target="_blank"
@@ -263,6 +270,14 @@ import pezVintage from "../assets/img/decoraciones/pez-vintage.png";
         ) as HTMLIFrameElement;
         const btnGoogleMaps = document.getElementById(
             "btn-google-maps",
+        ) as HTMLAnchorElement;
+        const locationPageUrls = [
+            "/cevicheria-jesus-maria",
+            "/cevicheria-san-isidro",
+            "/cevicheria-surquillo",
+        ];
+        const btnLocationPage = document.getElementById(
+            "btn-location-page",
         ) as HTMLAnchorElement;
         const btnWaze = document.getElementById(
             "btn-waze",
@@ -332,6 +347,7 @@ import pezVintage from "../assets/img/decoraciones/pez-vintage.png";
             }
 
             if (btnGoogleMaps) btnGoogleMaps.href = currentMeta.gmaps;
+            if (btnLocationPage) btnLocationPage.href = locationPageUrls[idx];
             if (btnWaze) btnWaze.href = currentMeta.waze;
 
             if (mapContainer) {
