@@ -99,9 +99,8 @@ Crea un archivo `.env` en la raíz del proyecto basándote en la siguiente estru
 PUBLIC_SANITY_PROJECT_ID
 PUBLIC_SANITY_DATASET
 
-# URLs de Webhook para procesar pedidos
+# URL de Google Apps Script para procesar pedidos
 PUBLIC_GOOGLE_SCRIPT_URL
-PUBLIC_MAKE_WEBHOOK_URL
 ```
 
 
@@ -133,4 +132,3 @@ npm run dev
 ```
 
 ---
-

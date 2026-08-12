@@ -17,7 +17,6 @@ import logo from "../assets/img/logo.png";
 
 const sanityProjectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID;
 const sanityDataset = import.meta.env.PUBLIC_SANITY_DATASET;
-const makeWebhookUrl = import.meta.env.PUBLIC_MAKE_WEBHOOK_URL;
 const googleScriptUrl = import.meta.env.PUBLIC_GOOGLE_SCRIPT_URL;
 
 const client = createClient({
@@ -559,40 +558,121 @@ const defaultLogoUrl = logo.src;
 
       <form id="checkout-form" class="grid grid-cols-1 md:grid-cols-2">
         <div class="p-6 space-y-5">
-          <p class="text-sm text-gray-500 leading-relaxed">Completa tus datos para coordinar el pedido y el pago por WhatsApp.</p>
+          <p class="text-sm text-gray-500 leading-relaxed">
+            Completa tus datos para coordinar el pedido y el pago por WhatsApp.
+          </p>
           <div>
-            <label class="block text-[11px] font-bold uppercase tracking-widest text-gray-500 mb-2 font-mono">Nombre y Apellido</label>
-            <input type="text" id="cliente-nombre" required minlength="3" maxlength="50" pattern="^[a-zA-ZÀ-ÿ\s]+$" title="Ingresa tu nombre y apellido" class="w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:border-[#27b29d] focus:ring-1 focus:ring-[#27b29d] outline-none text-black font-medium" placeholder="Ej. Juan Pérez" />
+            <label
+              class="block text-[11px] font-bold uppercase tracking-widest text-gray-500 mb-2 font-mono"
+              >Nombre y Apellido</label
+            >
+            <input
+              type="text"
+              id="cliente-nombre"
+              required
+              minlength="2"
+              maxlength="80"
+              pattern="^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ][A-Za-zÁÉÍÓÚÜÑáéíóúüñ.' -]*$"
+              autocomplete="name"
+              title="Usa entre 2 y 80 caracteres: letras, espacios, punto, apóstrofo o guion"
+              class="w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:border-[#27b29d] focus:ring-1 focus:ring-[#27b29d] outline-none text-black font-medium"
+              placeholder="Ej. Juan Pérez"
+            />
           </div>
           <div>
-            <label class="block text-[11px] font-bold uppercase tracking-widest text-gray-500 mb-2 font-mono">Número de Celular</label>
-            <input type="tel" id="cliente-celular" required pattern="9[0-9]{8}" title="Ingresa un celular peruano de 9 dígitos" class="w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:border-[#27b29d] focus:ring-1 focus:ring-[#27b29d] outline-none text-black font-medium font-mono" placeholder="999888777" />
+            <label
+              class="block text-[11px] font-bold uppercase tracking-widest text-gray-500 mb-2 font-mono"
+              >Número de Celular</label
+            >
+            <input
+              type="tel"
+              id="cliente-celular"
+              required
+              minlength="9"
+              maxlength="9"
+              inputmode="numeric"
+              autocomplete="tel"
+              pattern="9[0-9]{8}"
+              title="Ingresa un celular peruano de 9 dígitos que comience con 9"
+              class="w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:border-[#27b29d] focus:ring-1 focus:ring-[#27b29d] outline-none text-black font-medium font-mono"
+              placeholder="999888777"
+            />
           </div>
           <div>
-            <label class="block text-[11px] font-bold uppercase tracking-widest text-gray-500 mb-2 font-mono">Local de Recojo</label>
-            <select id="cliente-sede" required class="w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:border-[#27b29d] focus:ring-1 focus:ring-[#27b29d] outline-none text-black font-bold bg-white cursor-pointer appearance-none font-mono">
+            <label
+              class="block text-[11px] font-bold uppercase tracking-widest text-gray-500 mb-2 font-mono"
+              >Local de Recojo</label
+            >
+            <select
+              id="cliente-sede"
+              required
+              class="w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:border-[#27b29d] focus:ring-1 focus:ring-[#27b29d] outline-none text-black font-bold bg-white cursor-pointer appearance-none font-mono"
+            >
               <option value="" disabled selected>Selecciona una sede...</option>
               <option value="Jesus Maria">Sede Jesús María</option>
               <option value="San Isidro">Sede San Isidro</option>
               <option value="Surquillo">Sede Surquillo</option>
             </select>
           </div>
-          <label class="flex items-start gap-3 text-xs leading-relaxed text-gray-600 cursor-pointer">
-            <input id="privacy-consent" type="checkbox" required class="mt-0.5 h-4 w-4 accent-[#168878]" />
-            <span>He leído y acepto la <a href="/privacidad" target="_blank" class="font-semibold text-[#168878] underline">Política de Privacidad</a> y los <a href="/terminos" target="_blank" class="font-semibold text-[#168878] underline">Términos de Pedido</a>.</span>
+          <label
+            class="flex items-start gap-3 text-xs leading-relaxed text-gray-600 cursor-pointer"
+          >
+            <input
+              id="privacy-consent"
+              type="checkbox"
+              required
+              class="mt-0.5 h-4 w-4 accent-[#168878]"
+            />
+            <span
+              >He leído y acepto la <a
+                href="/privacidad"
+                target="_blank"
+                class="font-semibold text-[#168878] underline"
+                >Política de Privacidad</a
+              > y los <a
+                href="/terminos"
+                target="_blank"
+                class="font-semibold text-[#168878] underline"
+                >Términos de Pedido</a
+              >.</span
+            >
           </label>
-          <button type="submit" id="submit-order-btn" class="w-full bg-[#168878] text-white font-bold uppercase tracking-widest text-[13px] py-4 rounded-xl flex justify-center items-center gap-2 font-mono">Confirmar y enviar orden</button>
+          <button
+            type="submit"
+            id="submit-order-btn"
+            class="w-full bg-[#168878] text-white font-bold uppercase tracking-widest text-[13px] py-4 rounded-xl flex justify-center items-center gap-2 font-mono"
+            >Confirmar y enviar orden</button
+          >
         </div>
-        <aside class="border-t md:border-t-0 md:border-l border-[#173f50]/10 bg-[#f1f8f6] p-6">
-          <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-[#168878] font-mono">Antes de confirmar</p>
-          <h4 class="mt-2 text-2xl font-serif font-bold text-[#173f50]">Resumen del pedido</h4>
-          <p id="checkout-summary-sede" class="mt-2 text-sm text-[#64777c]">Selecciona la sede de recojo.</p>
-          <div id="checkout-summary-items" class="my-5 space-y-3 border-y border-[#173f50]/10 py-5"></div>
+        <aside
+          class="border-t md:border-t-0 md:border-l border-[#173f50]/10 bg-[#f1f8f6] p-6"
+        >
+          <p
+            class="text-[11px] font-bold uppercase tracking-[0.18em] text-[#168878] font-mono"
+          >
+            Antes de confirmar
+          </p>
+          <h4 class="mt-2 text-2xl font-serif font-bold text-[#173f50]">
+            Resumen del pedido
+          </h4>
+          <p id="checkout-summary-sede" class="mt-2 text-sm text-[#64777c]">
+            Selecciona la sede de recojo.
+          </p>
+          <div
+            id="checkout-summary-items"
+            class="my-5 space-y-3 border-y border-[#173f50]/10 py-5"
+          >
+          </div>
           <div class="flex items-end justify-between text-[#173f50]">
             <span class="font-semibold">Total estimado</span>
-            <span class="text-xl font-bold font-mono">S/ <span id="checkout-summary-total">0.00</span></span>
+            <span class="text-xl font-bold font-mono"
+              >S/ <span id="checkout-summary-total">0.00</span></span
+            >
           </div>
-          <p class="mt-5 text-xs leading-relaxed text-[#64777c]">El pedido queda sujeto a disponibilidad. Te contactaremos por WhatsApp para confirmar el pago antes de iniciar la preparación.</p>
+          <p class="mt-5 text-xs leading-relaxed text-[#64777c]">
+            El pedido queda sujeto a disponibilidad. Te contactaremos por
+            WhatsApp para confirmar el pago antes de iniciar la preparación.
+          </p>
         </aside>
       </form>
     </div>
@@ -635,9 +715,18 @@ const defaultLogoUrl = logo.src;
         </svg>
       </div>
 
-      <div class="mb-4 rounded-lg border border-[#27b29d]/25 bg-[#27b29d]/5 px-4 py-3 text-center">
-        <span class="block text-[10px] font-bold uppercase tracking-[0.18em] text-[#168878] font-mono">Código de pedido</span>
-        <span id="success-order-id" class="mt-1 block text-base font-bold tracking-wide text-[#173f50] font-mono">—</span>
+      <div
+        class="mb-4 rounded-lg border border-[#27b29d]/25 bg-[#27b29d]/5 px-4 py-3 text-center"
+      >
+        <span
+          class="block text-[10px] font-bold uppercase tracking-[0.18em] text-[#168878] font-mono"
+          >Código de pedido</span
+        >
+        <span
+          id="success-order-id"
+          class="mt-1 block text-base font-bold tracking-wide text-[#173f50] font-mono"
+          >—</span
+        >
       </div>
       <h3 class="text-2xl font-serif font-bold text-[#133c55] mb-3">
         ¡Orden Recibida!
@@ -661,7 +750,7 @@ const defaultLogoUrl = logo.src;
   </div>
 </Layout>
 
-<script define:vars={{ makeWebhookUrl, googleScriptUrl, defaultLogoUrl }} is:inline>
+<script define:vars={{ googleScriptUrl, defaultLogoUrl }} is:inline>
   document.addEventListener("DOMContentLoaded", () => {
     // Scrollspy Logic
     const sections = document.querySelectorAll("main > section");
@@ -696,18 +785,14 @@ const defaultLogoUrl = logo.src;
     window.addEventListener("scroll", changeActiveLink);
 
     // ==========================================
-    // LÓGICA E-COMMERCE Y CONFIGURACIÓN DE WEBHOOK
+    // LÓGICA E-COMMERCE Y CONFIGURACIÓN DE PEDIDOS
     // ==========================================
 
-    // [CONFIGURACIÓN] Elige el destino del webhook descomentando la opción deseada:
-
-    // --- OPCIÓN A: MAKE (ACTUAL) ---
-    // const WEBHOOK_URL = makeWebhookUrl;
-    // const IS_GOOGLE_SCRIPT = false;
-
-    // --- OPCIÓN B: GOOGLE APPS SCRIPT (FUTURO) ---
     const WEBHOOK_URL = googleScriptUrl;
-    const IS_GOOGLE_SCRIPT = true;
+    const MAX_BODY_LENGTH = 20000;
+    const MAX_PRODUCTOS_DISTINTOS = 30;
+    const MAX_CANTIDAD_POR_PRODUCTO = 20;
+    const MAX_UNIDADES_TOTALES = 50;
 
     let cart = [];
     try {
@@ -716,6 +801,44 @@ const defaultLogoUrl = logo.src;
     } catch (e) {
       cart = [];
     }
+
+    const getTotalUnits = () =>
+      cart.reduce((sum, item) => sum + item.quantity, 0);
+
+    const hasValidStoredCart =
+      cart.length <= MAX_PRODUCTOS_DISTINTOS &&
+      cart.every(
+        (item) =>
+          item &&
+          typeof item.name === "string" &&
+          item.name.trim().length > 0 &&
+          item.name.trim().length <= 120 &&
+          Number.isInteger(item.quantity) &&
+          item.quantity > 0 &&
+          item.quantity <= MAX_CANTIDAD_POR_PRODUCTO,
+      ) &&
+      getTotalUnits() <= MAX_UNIDADES_TOTALES &&
+      new Set(cart.map((item) => item.name.trim().toLowerCase())).size ===
+        cart.length;
+
+    if (!hasValidStoredCart) {
+      cart = [];
+      localStorage.removeItem("maria_pastor_cart");
+    }
+
+    const canAddUnit = (item) => {
+      if (item && item.quantity >= MAX_CANTIDAD_POR_PRODUCTO) {
+        alert("Puedes pedir como máximo 20 unidades del mismo plato.");
+        return false;
+      }
+
+      if (getTotalUnits() >= MAX_UNIDADES_TOTALES) {
+        alert("Puedes pedir como máximo 50 unidades en total.");
+        return false;
+      }
+
+      return true;
+    };
 
     const cartOverlay = document.getElementById("cart-overlay");
     const cartSidebar = document.getElementById("cart-sidebar");
@@ -765,6 +888,13 @@ const defaultLogoUrl = logo.src;
             qtyControls.classList.remove("flex");
 
             initialBtn.onclick = () => {
+              if (cart.length >= MAX_PRODUCTOS_DISTINTOS) {
+                alert("Puedes incluir como máximo 30 platos distintos.");
+                return;
+              }
+
+              if (!canAddUnit(null)) return;
+
               cart.push({ name, price, quantity: 1, image });
               updateCartUI();
               playCartAnimation();
@@ -792,6 +922,7 @@ const defaultLogoUrl = logo.src;
             };
 
             btnIncrease.onclick = () => {
+              if (!canAddUnit(cartItem)) return;
               cartItem.quantity++;
               updateCartUI();
             };
@@ -880,7 +1011,9 @@ const defaultLogoUrl = logo.src;
 
       document.querySelectorAll(".cart-qty-plus").forEach((btn) => {
         btn.addEventListener("click", (e) => {
-          cart[e.target.dataset.index].quantity++;
+          const item = cart[e.target.dataset.index];
+          if (!canAddUnit(item)) return;
+          item.quantity++;
           updateCartUI();
         });
       });
@@ -908,7 +1041,8 @@ const defaultLogoUrl = logo.src;
       summaryItems.innerHTML = "";
 
       if (cart.length === 0) {
-        summaryItems.innerHTML = '<p class="text-sm text-[#64777c]">Tu carrito está vacío.</p>';
+        summaryItems.innerHTML =
+          '<p class="text-sm text-[#64777c]">Tu carrito está vacío.</p>';
       } else {
         cart.forEach((item) => {
           const row = document.createElement("div");
@@ -917,20 +1051,27 @@ const defaultLogoUrl = logo.src;
           name.className = "text-[#415b63]";
           name.textContent = item.quantity + "× " + item.name;
           const price = document.createElement("span");
-          price.className = "font-mono font-semibold text-[#173f50] whitespace-nowrap";
+          price.className =
+            "font-mono font-semibold text-[#173f50] whitespace-nowrap";
           price.textContent = "S/ " + (item.price * item.quantity).toFixed(2);
           row.append(name, price);
           summaryItems.appendChild(row);
         });
       }
 
-      summaryTotal.textContent = cart.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2);
-      summarySede.textContent = selectedSede && selectedSede.value
-        ? "Recojo en: " + selectedSede.options[selectedSede.selectedIndex].text
-        : "Selecciona la sede de recojo.";
+      summaryTotal.textContent = cart
+        .reduce((sum, item) => sum + item.price * item.quantity, 0)
+        .toFixed(2);
+      summarySede.textContent =
+        selectedSede && selectedSede.value
+          ? "Recojo en: " +
+            selectedSede.options[selectedSede.selectedIndex].text
+          : "Selecciona la sede de recojo.";
     };
 
-    document.getElementById("cliente-sede")?.addEventListener("change", renderCheckoutSummary);
+    document
+      .getElementById("cliente-sede")
+      ?.addEventListener("change", renderCheckoutSummary);
     const toggleCart = () => {
       cartSidebar.classList.toggle("translate-x-full");
       cartOverlay.classList.toggle("hidden");
@@ -970,13 +1111,29 @@ const defaultLogoUrl = logo.src;
     });
 
     // ==========================================
-    // ENVÍO DE DATOS A MAKE
+    // ENVÍO DE DATOS A GOOGLE APPS SCRIPT
     // ==========================================
     checkoutForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       if (cart.length === 0) {
         alert("El Carrito está vacío.");
+        return;
+      }
+
+      if (
+        cart.length > MAX_PRODUCTOS_DISTINTOS ||
+        getTotalUnits() > MAX_UNIDADES_TOTALES ||
+        cart.some(
+          (item) =>
+            !Number.isInteger(item.quantity) ||
+            item.quantity < 1 ||
+            item.quantity > MAX_CANTIDAD_POR_PRODUCTO,
+        )
+      ) {
+        alert(
+          "El carrito supera los límites permitidos. Revísalo antes de continuar.",
+        );
         return;
       }
 
@@ -988,8 +1145,19 @@ const defaultLogoUrl = logo.src;
         cliente: nombre,
         celular: celular,
         sede: sede,
-        items: cart.map(item => ({ name: item.name, quantity: item.quantity }))
+        items: cart.map((item) => ({
+          name: item.name,
+          quantity: item.quantity,
+        })),
       };
+      const payloadJson = JSON.stringify(payload);
+
+      if (payloadJson.length > MAX_BODY_LENGTH) {
+        alert(
+          "El pedido contiene demasiada información. Reduce el carrito e inténtalo nuevamente.",
+        );
+        return;
+      }
 
       submitOrderBtn.innerHTML = `
         <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
@@ -1012,26 +1180,19 @@ const defaultLogoUrl = logo.src;
         let envioExitoso = false;
         let orderId = "";
 
-        if (IS_GOOGLE_SCRIPT) {
-          const response = await fetch(WEBHOOK_URL, {
-            method: "POST",
-            headers: { "Content-Type": "text/plain;charset=utf-8" },
-            body: JSON.stringify(payload),
-          });
-          const responseData = await response.json();
-          if (responseData.status === "success") {
-            orderId = responseData.orderId || "";
-            envioExitoso = true;
-          }
-        } else {
-          const response = await fetch(WEBHOOK_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-          });
-          if (response.ok) {
-            envioExitoso = true;
-          }
+        const response = await fetch(WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: payloadJson,
+        });
+        const responseData = await response.json();
+        if (
+          responseData.status === "success" &&
+          typeof responseData.orderId === "string" &&
+          /^MP-\d{8}-[A-F0-9]{8}$/.test(responseData.orderId)
+        ) {
+          orderId = responseData.orderId;
+          envioExitoso = true;
         }
 
         if (envioExitoso) {
@@ -1046,7 +1207,7 @@ const defaultLogoUrl = logo.src;
           const successOverlay = document.getElementById("success-overlay");
           const successModal = document.getElementById("success-modal");
           document.getElementById("success-sede").innerText = sede;
-          document.getElementById("success-order-id").innerText = orderId || "Pendiente";
+          document.getElementById("success-order-id").innerText = orderId;
 
           successOverlay.classList.remove("hidden");
           setTimeout(() => {
